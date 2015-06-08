@@ -1,12 +1,13 @@
 function ItemsFactory({React}) {
     var EditItem = require('./EditItem')({React});
+    var TextEdit = require('./TextEdit')({React});
 
     var EditableDailyItem = React.createClass({
         render() {
             return (<div>
                         <input type="checkbox" onChange={this.toggleComplete} checked={this.props.item.get('completed')} />
                         <EditItem
-                            editComponent={TextItemEdit}
+                            editComponent={TextEdit}
                             displayComponent={EditableTaskTextComponent}
                             editAction={this.saveItem}
                             item={this.props.item} />
@@ -28,7 +29,7 @@ function ItemsFactory({React}) {
             return (<div>
                         <input type="checkbox" onClick={this.toggleComplete} checked={this.props.item.completed} />
                         <EditItem
-                            editComponent={TextItemEdit}
+                            editComponent={TextEdit}
                             displayComponent={EditableTaskTextComponent}
                             editAction={this.saveItem}
                             item={this.props.item} />
@@ -63,7 +64,7 @@ function ItemsFactory({React}) {
                         {upButton}
                         {downButton}
                         <EditItem
-                            editComponent={TextItemEdit}
+                            editComponent={TextEdit}
                             displayComponent={EditableTaskTextComponent}
                             editAction={this.saveItem}
                             item={this.props.item} />
@@ -72,25 +73,6 @@ function ItemsFactory({React}) {
 
         saveItem(item) {
             this.props.flux.getActions('tasks').saveTask(item);
-        }
-    });
-
-    var TextItemEdit = React.createClass({
-        render() {
-            return (
-                <div>
-                    <input type="text" onChange={this.onChange} value={this.props.item.get('text')} />
-                    <button type="button" onClick={this.finishEdit}>Save</button>
-                </div>
-            );
-        },
-
-        finishEdit() {
-            this.props.finishEdit();
-        },
-
-        onChange(e) {
-            this.props.editTo(this.props.item.set('text', e.target.value));
         }
     });
 
