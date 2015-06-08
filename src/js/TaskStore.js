@@ -42,7 +42,6 @@ class TaskStore extends Store {
      */
     handleSaveTask(task) {
         var todos = this.state.todos.set(task.get('id').toString(), task);
-        console.log(todos.toJS());
         this.setState({
             todos
         });
