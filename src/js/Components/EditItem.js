@@ -1,4 +1,28 @@
 function EditItemFactory({React}) {
+
+    var ItemEdit = React.createClass({
+        getInitialState() {
+            return {
+                editedItem: this.props.item
+            };
+        },
+
+        finishEdit() {
+            this.props.finishEdit(this.state.editedItem);
+        },
+
+        editTo(item) {
+            this.setState({
+                editedItem: item
+            });
+        },
+
+        render() {
+            var Component = this.props.component;
+            return <Component editTo={this.editTo} finishEdit={this.finishEdit} item={this.state.editedItem} />
+        }
+    });
+
     var EditItem = React.createClass({
         getInitialState() {
             return {
@@ -11,7 +35,7 @@ function EditItemFactory({React}) {
             var NormalComponent = this.props.displayComponent;
 
             if (this.state.editing) {
-                return <EditingComponent item={this.props.item} finishEdit={this.onFinishEdit} />
+                return <ItemEdit component={EditingComponent} item={this.props.item} finishEdit={this.onFinishEdit} />
             }
 
             return <NormalComponent item={this.props.item} onEdit={this.editItem} />

@@ -4,10 +4,10 @@ function ItemsFactory({React}) {
     var EditableDailyItem = React.createClass({
         render() {
             return (<div>
-                        <input type="checkbox" onClick={this.toggleComplete} checked={this.props.item.completed} />
+                        <input type="checkbox" onChange={this.toggleComplete} checked={this.props.item.get('completed')} />
                         <EditItem
                             editComponent={DailyItemEdit}
-                            displayComponent={DailyItem}
+                            displayComponent={EditableTaskTextComponent}
                             editAction={this.saveItem}
                             item={this.props.item} />
                     </div>);
@@ -25,143 +25,110 @@ function ItemsFactory({React}) {
 
     var EditableTodoItem = React.createClass({
         render() {
-            return <EditItem
-                        editComponent={TodoItemEdit}
-                        displayComponent={TodoItem}
-                        editAction={this.props.flux.getActions('tasks').saveTask}
-                        item={this.props.item} />;
+            return (<div>
+                        <input type="checkbox" onClick={this.toggleComplete} checked={this.props.item.completed} />
+                        <EditItem
+                            editComponent={TodoItemEdit}
+                            displayComponent={EditableTaskTextComponent}
+                            editAction={this.saveItem}
+                            item={this.props.item} />
+                    </div>);
+        },
+
+        toggleComplete(e) {
+            var item = this.props.item.set('completed', e.target.checked);
+            this.props.flux.getActions('tasks').saveTask(item);
+        },
+
+        saveItem(item) {
+            this.props.flux.getActions('tasks').saveTask(item);
         }
     });
 
     var EditableHabitItem = React.createClass({
         render() {
-            return <EditItem
-                        editComponent={HabitItemEdit}
-                        displayComponent={HabitItem}
-                        editAction={this.props.flux.getActions('tasks').saveTask}
-                        item={this.props.item} />;
-        }
-    });
+            return (<div>
+                    <button type="button">+</button>
+                    <button type="button">-</button>
+                        <EditItem
+                            editComponent={HabitItemEdit}
+                            displayComponent={EditableTaskTextComponent}
+                            editAction={this.saveItem}
+                            item={this.props.item} />
+                    </div>);
+        },
 
-    var HabitItem = React.createClass({
-        render() {
-            return (
-                <div>
-                    <button>+</button>
-                    <button>-</button>
-                    <span onClick={this.props.onEdit}>{this.props.item.get('text')}</span>
-                </div>
-            );
+        saveItem(item) {
+            this.props.flux.getActions('tasks').saveTask(item);
         }
     });
 
     var HabitItemEdit = React.createClass({
-        getInitialState() {
-            return {
-                editedItem: this.props.item
-            };
-        },
-
-        onChange(e) {
-            e.preventDefault();
-
-            this.setState({
-                editedItem: this.state.editedItem.set('text', e.target.value)
-            });
-        },
-
-        finishEdit() {
-            this.props.finishEdit(this.state.editedItem);
-        },
-
         render() {
             return (
                 <div>
-                    <button type="button">+</button>
-                    <button type="button">-</button>
-                    <input type="text" onChange={this.onChange} value={this.state.editedItem.get('text')} />
+                    <input type="text" onChange={this.onChange} value={this.props.item.get('text')} />
                     <button type="button" onClick={this.finishEdit}>Save</button>
                 </div>
             );
+        },
+
+        finishEdit() {
+            this.props.finishEdit();
+        },
+
+        onChange(e) {
+            this.props.editTo(this.props.item.set('text', e.target.value));
         }
     });
 
     var TodoItemEdit = React.createClass({
-        getInitialState() {
-            return {
-                editedItem: this.props.item
-            };
-        },
-
-        onChange(e) {
-            e.preventDefault();
-
-            this.setState({
-                editedItem: this.state.editedItem.set('text', e.target.value)
-            });
-        },
-
         finishEdit() {
-            this.props.finishEdit(this.state.editedItem);
+            this.props.finishEdit();
         },
 
         render() {
             return (
                 <div>
-                    <input type="text" onChange={this.onChange} value={this.state.editedItem.get('text')} />
+                    <input type="text" onChange={this.onChange} value={this.props.item.get('text')} />
                     <button type="button" onClick={this.finishEdit}>Save</button>
                 </div>
             );
+        },
+
+        onChange(e) {
+            this.props.editTo(this.props.item.set('text', e.target.value));
         }
     });
 
     var DailyItemEdit = React.createClass({
-        getInitialState() {
-            return {
-                editedItem: this.props.item
-            };
-        },
-
         onChange(e) {
-            e.preventDefault();
-
-            this.setState({
-                editedItem: this.state.editedItem.set('text', e.target.value)
-            });
+            this.props.editTo(this.props.item.set('text', e.target.value));
         },
 
         finishEdit() {
-            this.props.finishEdit(this.state.editedItem);
+            this.props.finishEdit();
         },
 
         render() {
             return (
                 <div>
-                    <input type="text" onChange={this.onChange} value={this.state.editedItem.get('text')} />
+                    <input type="text" onChange={this.onChange} value={this.props.item.get('text')} />
                     <button type="button" onClick={this.finishEdit}>Save</button>
                 </div>
             );
         }
     });
 
-    var TodoItem = React.createClass({
+    var EditableTextComponent = React.createClass({
         render() {
-            return (
-                <div>
-                    <input type="checkbox" />
-                    <span onClick={this.props.onEdit}>{this.props.item.get('text')}</span>
-                </div>
-            );
+            return <span onClick={this.props.onEdit}>{this.props.text}</span>;
         }
     });
 
-    var DailyItem = React.createClass({
-        render: function() {
-            return (
-                <div>
-                    <span onClick={this.props.onEdit}>{this.props.item.get('text')}</span>
-                </div>
-            );
+    var EditableTaskTextComponent = React.createClass({
+        render() {
+            return <EditableTextComponent onEdit={this.props.onEdit} text={this.props.item.get('text')} />;
         }
     });
 
