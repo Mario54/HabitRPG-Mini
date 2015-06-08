@@ -6,7 +6,7 @@ function ItemsFactory({React}) {
             return (<div>
                         <input type="checkbox" onChange={this.toggleComplete} checked={this.props.item.get('completed')} />
                         <EditItem
-                            editComponent={DailyItemEdit}
+                            editComponent={TextItemEdit}
                             displayComponent={EditableTaskTextComponent}
                             editAction={this.saveItem}
                             item={this.props.item} />
@@ -28,7 +28,7 @@ function ItemsFactory({React}) {
             return (<div>
                         <input type="checkbox" onClick={this.toggleComplete} checked={this.props.item.completed} />
                         <EditItem
-                            editComponent={TodoItemEdit}
+                            editComponent={TextItemEdit}
                             displayComponent={EditableTaskTextComponent}
                             editAction={this.saveItem}
                             item={this.props.item} />
@@ -47,11 +47,23 @@ function ItemsFactory({React}) {
 
     var EditableHabitItem = React.createClass({
         render() {
+            var habit = this.props.item,
+                upButton = <button type="button">+</button>,
+                downButton = <button type="button">-</button>;
+
+            if ( ! habit.get('up')) {
+                upButton = "";
+            }
+
+            if ( ! habit.get('down')) {
+                downButton = "";
+            }
+
             return (<div>
-                    <button type="button">+</button>
-                    <button type="button">-</button>
+                        {upButton}
+                        {downButton}
                         <EditItem
-                            editComponent={HabitItemEdit}
+                            editComponent={TextItemEdit}
                             displayComponent={EditableTaskTextComponent}
                             editAction={this.saveItem}
                             item={this.props.item} />
@@ -63,7 +75,7 @@ function ItemsFactory({React}) {
         }
     });
 
-    var HabitItemEdit = React.createClass({
+    var TextItemEdit = React.createClass({
         render() {
             return (
                 <div>
@@ -79,44 +91,6 @@ function ItemsFactory({React}) {
 
         onChange(e) {
             this.props.editTo(this.props.item.set('text', e.target.value));
-        }
-    });
-
-    var TodoItemEdit = React.createClass({
-        finishEdit() {
-            this.props.finishEdit();
-        },
-
-        render() {
-            return (
-                <div>
-                    <input type="text" onChange={this.onChange} value={this.props.item.get('text')} />
-                    <button type="button" onClick={this.finishEdit}>Save</button>
-                </div>
-            );
-        },
-
-        onChange(e) {
-            this.props.editTo(this.props.item.set('text', e.target.value));
-        }
-    });
-
-    var DailyItemEdit = React.createClass({
-        onChange(e) {
-            this.props.editTo(this.props.item.set('text', e.target.value));
-        },
-
-        finishEdit() {
-            this.props.finishEdit();
-        },
-
-        render() {
-            return (
-                <div>
-                    <input type="text" onChange={this.onChange} value={this.props.item.get('text')} />
-                    <button type="button" onClick={this.finishEdit}>Save</button>
-                </div>
-            );
         }
     });
 

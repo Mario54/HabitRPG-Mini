@@ -1,6 +1,6 @@
 var FluxComponent = require('flummox/component');
 var TabView = require('./TabView');
-var {DailiesView, TodosView, HabitsView } = require('./Components/Tabs');
+var {DailiesView, TodosView, HabitsView } = require('./Tabs');
 
 var tabs = [
     { title: "Habits", component: HabitsView },
@@ -13,7 +13,7 @@ function HabitRPGFactory({React}) {
         render: function() {
             return (
                 <FluxComponent connectToStores={['tasks']}>
-                    <TabView tabs={this.props.tabs} />
+                    <TabView tabs={tabs} />
                 </FluxComponent>
             );
         }

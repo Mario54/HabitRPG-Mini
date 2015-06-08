@@ -5,4 +5,4 @@ var HabitRPG = require('./Components/HabitRPG')({React});
 
 var flux = new AppFlux();
 
-React.render(<FluxComponent flux={flux}><HabitRPG tabs={tabs} /></FluxComponent>, document.getElementById('content'));
+React.render(<FluxComponent flux={flux}><HabitRPG /></FluxComponent>, document.getElementById('content'));

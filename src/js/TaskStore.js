@@ -17,17 +17,20 @@ class TaskStore extends Store {
             todos: Immutable.fromJS({
                 1: { id: 1, text: 'test 1', type: 'todo'  },
                 2: { id: 2, text: 'test 2', type: 'daily' },
-                3: { id: 3, text: 'test 3', type: 'habit' },
+                3: { id: 3, text: 'test 3', type: 'habit', up: true, down: false },
                 4: { id: 4, text: 'test 4', type: 'todo'  },
                 5: { id: 5, text: 'test 5', type: 'daily' },
-                6: { id: 6, text: 'test 6', type: 'habit' },
+                6: { id: 6, text: 'test 6', type: 'habit', up: false, down: true },
                 7: { id: 7, text: 'test 7', type: 'todo'  },
                 8: { id: 8, text: 'test 8', type: 'daily' },
-                9: { id: 9, text: 'test 9', type: 'habit' },
+                9: { id: 9, text: 'test 9', type: 'habit', up: true, down: true },
             })
         };
     }
-
+    /**
+     * Creates a new task in the store. If the task has no id, then it is set
+     * automatically by this method.
+     */
     handleNewTask(content) {
         var todo = Immutable.fromJS(assign({}, content, { id: uuid.v4() }));
 
