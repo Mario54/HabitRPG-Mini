@@ -1,0 +1,25 @@
+{
+  "name": "HabitRPG_Client",
+  "version": "1.0.0",
+  "description": "",
+  "main": "gulpfile.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "browserify": "^10.2.3",
+    "flummox": "^3.5.2",
+    "gulp": "^3.9.0",
+    "gulp-util": "^3.0.5",
+    "immutable": "^3.7.3",
+    "object-assign": "^3.0.0",
+    "path": "^0.11.14",
+    "react": "^0.13.3",
+    "uglifyify": "^3.0.1",
+    "uuid": "^2.0.1",
+    "vinyl-source-stream": "^1.1.0",
+    "watchify": "^3.2.1"
+  }
+}
