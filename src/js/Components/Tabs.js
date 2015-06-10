@@ -18,9 +18,13 @@ var isHabit = isTaskType('habit'),
 
 var HabitsView = React.createClass({
     render: function() {
-        var habits = this.props.todos.filter(isHabit).map(function (item) {
-            return <FluxComponent flux={this.props.flux}><EditableHabitItem item={item} /></FluxComponent>;
-        }.bind(this));
+        var habits;
+        if (this.props.todos) {
+            habits = this.props.todos.filter(isHabit).map(function (item) {
+                return <FluxComponent flux={this.props.flux}><EditableHabitItem item={item} /></FluxComponent>;
+            }.bind(this));
+        }
+
 
         return (
             <div>

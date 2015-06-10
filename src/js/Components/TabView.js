@@ -39,7 +39,7 @@ var TabView = React.createClass({
         var currentTab = this.state.currentTab;
 
         var TabView = React.createElement(this.props.tabs[this.state.currentTab].component, {
-            todos: this.props.todos.toList(),
+            todos: this.props.todos && this.props.todos.toList(),
             flux: this.props.flux
         });
 

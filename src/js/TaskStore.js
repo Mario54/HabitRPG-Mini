@@ -12,19 +12,20 @@ class TaskStore extends Store {
         this.register(taskActions.newTask, this.handleNewTask);
         this.register(taskActions.saveTask, this.handleSaveTask);
         this.register(taskActions.deleteTask, this.handleDeleteTask);
+        this.register(taskActions.loadAllTasks, this.handleLoadAllTasks);
 
         this.state = {
-            todos: Immutable.fromJS({
-                1: { id: 1, text: 'test 1', type: 'todo'  },
-                2: { id: 2, text: 'test 2', type: 'daily' },
-                3: { id: 3, text: 'test 3', type: 'habit', up: true, down: false },
-                4: { id: 4, text: 'test 4', type: 'todo'  },
-                5: { id: 5, text: 'test 5', type: 'daily' },
-                6: { id: 6, text: 'test 6', type: 'habit', up: false, down: true },
-                7: { id: 7, text: 'test 7', type: 'todo'  },
-                8: { id: 8, text: 'test 8', type: 'daily' },
-                9: { id: 9, text: 'test 9', type: 'habit', up: true, down: true },
-            })
+            // todos: Immutable.fromJS({
+            //     1: { id: 1, text: 'test 1', type: 'todo'  },
+            //     2: { id: 2, text: 'test 2', type: 'daily' },
+            //     3: { id: 3, text: 'test 3', type: 'habit', up: true, down: false },
+            //     4: { id: 4, text: 'test 4', type: 'todo'  },
+            //     5: { id: 5, text: 'test 5', type: 'daily' },
+            //     6: { id: 6, text: 'test 6', type: 'habit', up: false, down: true },
+            //     7: { id: 7, text: 'test 7', type: 'todo'  },
+            //     8: { id: 8, text: 'test 8', type: 'daily' },
+            //     9: { id: 9, text: 'test 9', type: 'habit', up: true, down: true },
+            // })
         };
     }
     /**
@@ -57,6 +58,17 @@ class TaskStore extends Store {
         this.setState({
             todos: this.state.todos.delete(task.get('id'))
         })
+    }
+
+    /**
+     * Overwrites all the tasks in the applications with the ones sent in.
+     */
+    handleLoadAllTasks(tasks) {
+        var tasks_i = Immutable.fromJS(tasks);
+
+        this.setState({
+            todos: tasks_i
+        });
     }
 };
 
