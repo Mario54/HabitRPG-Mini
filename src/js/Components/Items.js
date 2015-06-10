@@ -12,7 +12,7 @@ function ItemsFactory({React}) {
 
             return (<div>
                         <input type="checkbox" onChange={this.toggleComplete} checked={this.props.item.get('completed')} />
-                        {item}                        
+                        {item}
                     </div>);
         },
 
@@ -37,7 +37,7 @@ function ItemsFactory({React}) {
                                  editAction={this.saveItem}
                                  item={this.props.item} />;*/
 
-            var item = <span>{this.props.item.text}</span>;
+            var item = <span>{this.props.item.get('text')}</span>;
 
             return (<div>
                         <input type="checkbox" onClick={this.toggleComplete} checked={this.props.item.completed} />
@@ -46,8 +46,11 @@ function ItemsFactory({React}) {
         },
 
         toggleComplete(e) {
-            var item = this.props.item.set('completed', e.target.checked);
-            this.props.flux.getActions('tasks').saveTask(item);
+            var completed = e.target.checked;
+            var item = this.props.item.set('completed', completed);
+
+            // this.props.flux.getActions('tasks').saveTask(item);
+            this.props.flux.getActions('tasks').updateTaskScore(item, completed ? 'up' : 'down');
         },
 
         saveItem(item) {
@@ -58,8 +61,8 @@ function ItemsFactory({React}) {
     var EditableHabitItem = React.createClass({
         render() {
             var habit = this.props.item,
-                upButton = <button type="button">+</button>,
-                downButton = <button type="button">-</button>;
+                upButton = <button onClick={this.upButtonClicked} type="button">+</button>,
+                downButton = <button onClick={this.downButtonClicked} type="button">-</button>;
 
             if ( ! habit.get('up')) {
                 upButton = "";
@@ -85,6 +88,14 @@ function ItemsFactory({React}) {
 
         saveItem(item) {
             this.props.flux.getActions('tasks').saveTask(item);
+        },
+
+        upButtonClicked(e) {
+            this.props.flux.getActions('tasks').updateTaskScore(this.props.item, 'up');
+        },
+
+        downButtonClicked(e) {
+            this.props.flux.getActions('tasks').updateTaskScore(this.props.item, 'down');
         }
     });
 
