@@ -33,7 +33,6 @@ var HabitsView = React.createClass({
         return (
             <div>
                 <ComponentList components={habits} />
-                <NewItemForm submit={this.addNewHabit} />
             </div>
         );
     },
@@ -56,7 +55,6 @@ var DailiesView = React.createClass({
         return (
             <div>
                 <ComponentList components={dailies} />
-                <NewItemForm />
             </div>
         );
     }
@@ -71,7 +69,6 @@ var TodosView = React.createClass({
         return (
             <div>
                 <ComponentList components={todos} />
-                <NewItemForm submit={this.newTodoItem}/>
             </div>
         );
     },
