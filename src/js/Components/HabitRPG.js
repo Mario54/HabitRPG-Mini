@@ -12,7 +12,10 @@ function HabitRPGFactory({React}) {
     var HabitRPG = React.createClass({
         render: function() {
             return (
-                <FluxComponent connectToStores={['tasks']}>
+                <FluxComponent connectToStores={['tasks']}
+                               stateGetter={([taskStore]) =>({
+                                   tasks: taskStore.getTodaysTasks()
+                               })}>
                     <TabView tabs={tabs} />
                 </FluxComponent>
             );

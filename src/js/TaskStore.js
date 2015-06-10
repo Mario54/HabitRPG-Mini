@@ -3,6 +3,20 @@ import Immutable from 'immutable';
 import assign    from 'object-assign';
 import uuid      from 'uuid';
 
+function getDayString(day) {
+    var days = {
+        0: 'su',
+        1: 'm',
+        2: 't',
+        3: 'w',
+        4: 'th',
+        5: 'f',
+        6: 's'
+    };
+
+    return days[day];
+}
+
 class TaskStore extends Store {
 
     constructor(flux) {
@@ -14,20 +28,44 @@ class TaskStore extends Store {
         this.register(taskActions.deleteTask, this.handleDeleteTask);
         this.register(taskActions.loadAllTasks, this.handleLoadAllTasks);
 
-        this.state = {
-            // todos: Immutable.fromJS({
-            //     1: { id: 1, text: 'test 1', type: 'todo'  },
-            //     2: { id: 2, text: 'test 2', type: 'daily' },
-            //     3: { id: 3, text: 'test 3', type: 'habit', up: true, down: false },
-            //     4: { id: 4, text: 'test 4', type: 'todo'  },
-            //     5: { id: 5, text: 'test 5', type: 'daily' },
-            //     6: { id: 6, text: 'test 6', type: 'habit', up: false, down: true },
-            //     7: { id: 7, text: 'test 7', type: 'todo'  },
-            //     8: { id: 8, text: 'test 8', type: 'daily' },
-            //     9: { id: 9, text: 'test 9', type: 'habit', up: true, down: true },
-            // })
-        };
+        this.state = {};
     }
+
+    getTasks() {
+        return this.state.tasks;
+    }
+
+    /**
+     * Returns all the tasks that are active today.
+     */
+    getTodaysTasks() {
+        console.log('accessing todays tasks');
+        if ( ! this.state.tasks) {
+            return;
+        }
+
+        return this.state.tasks.filter((task) => {
+            var type = task.get('type');
+
+            if (type === 'daily') {
+                var currentDay = getDayString((new Date()).getDay());
+                if (task.get('repeat').get(currentDay)) {
+                    return true;
+                }
+
+                return false;
+            } else if (type === 'todo') {
+                if ( ! task.get('completed')) {
+                    return true;
+                }
+
+                return false;
+            }
+
+            return true;
+        });
+    }
+
     /**
      * Creates a new task in the store. If the task has no id, then it is set
      * automatically by this method.
@@ -36,7 +74,7 @@ class TaskStore extends Store {
         var todo = Immutable.fromJS(assign({}, content, { id: uuid.v4() }));
 
         this.setState({
-            todos: this.state.todos.set(todo.get('id'), todo)
+            tasks: this.state.tasks.set(todo.get('id'), todo)
         });
     }
 
@@ -45,9 +83,9 @@ class TaskStore extends Store {
      * generated.
      */
     handleSaveTask(task) {
-        var todos = this.state.todos.set(task.get('id').toString(), task);
+        var tasks = this.state.tasks.set(task.get('id').toString(), task);
         this.setState({
-            todos
+            tasks
         });
     }
 
@@ -56,7 +94,7 @@ class TaskStore extends Store {
      */
     handleDeleteTask(task) {
         this.setState({
-            todos: this.state.todos.delete(task.get('id'))
+            tasks: this.state.tasks.delete(task.get('id'))
         })
     }
 
@@ -64,10 +102,11 @@ class TaskStore extends Store {
      * Overwrites all the tasks in the applications with the ones sent in.
      */
     handleLoadAllTasks(tasks) {
+        console.log(tasks);
         var tasks_i = Immutable.fromJS(tasks);
 
         this.setState({
-            todos: tasks_i
+            tasks: tasks_i
         });
     }
 };
