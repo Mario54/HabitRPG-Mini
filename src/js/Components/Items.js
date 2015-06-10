@@ -4,13 +4,15 @@ function ItemsFactory({React}) {
 
     var EditableDailyItem = React.createClass({
         render() {
+            /*var item = <EditItem editComponent={TextEdit}
+                                 displayComponent={EditableTaskTextComponent}
+                                 editAction={this.saveItem}
+                                 item={this.props.item} />;*/
+            var item = <span>{this.props.item.get('text')}</span>;
+
             return (<div>
                         <input type="checkbox" onChange={this.toggleComplete} checked={this.props.item.get('completed')} />
-                        <EditItem
-                            editComponent={TextEdit}
-                            displayComponent={EditableTaskTextComponent}
-                            editAction={this.saveItem}
-                            item={this.props.item} />
+                        {item}                        
                     </div>);
         },
 
@@ -30,13 +32,16 @@ function ItemsFactory({React}) {
 
     var EditableTodoItem = React.createClass({
         render() {
+            /*var item = <EditItem editComponent={TextEdit}
+                                 displayComponent={EditableTaskTextComponent}
+                                 editAction={this.saveItem}
+                                 item={this.props.item} />;*/
+
+            var item = <span>{this.props.item.text}</span>;
+
             return (<div>
                         <input type="checkbox" onClick={this.toggleComplete} checked={this.props.item.completed} />
-                        <EditItem
-                            editComponent={TextEdit}
-                            displayComponent={EditableTaskTextComponent}
-                            editAction={this.saveItem}
-                            item={this.props.item} />
+                        {item}
                     </div>);
         },
 
@@ -64,14 +69,17 @@ function ItemsFactory({React}) {
                 downButton = "";
             }
 
+            /*var item = <EditItem editComponent={TextEdit}
+                                 displayComponent={EditableTaskTextComponent}
+                                 editAction={this.saveItem}
+                                 item={this.props.item} />;*/
+
+            var item = <span>{this.props.item.get('text')}</span>;
+
             return (<div>
                         {upButton}
                         {downButton}
-                        <EditItem
-                            editComponent={TextEdit}
-                            displayComponent={EditableTaskTextComponent}
-                            editAction={this.saveItem}
-                            item={this.props.item} />
+                        {item}
                     </div>);
         },
 
