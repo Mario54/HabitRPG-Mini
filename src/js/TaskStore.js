@@ -27,6 +27,12 @@ class TaskStore extends Store {
         this.register(taskActions.saveTask, this.handleSaveTask);
         this.register(taskActions.deleteTask, this.handleDeleteTask);
         this.register(taskActions.loadAllTasks, this.handleLoadAllTasks);
+        this.registerAsync(
+            taskActions.updateTaskScore,
+            this.beginUpdateTaskScore,
+            this.successUpdateTaskScore,
+            this.failureUpdateTaskScore);
+
 
         this.state = {};
     }
@@ -44,6 +50,10 @@ class TaskStore extends Store {
         }
 
         return this.state.tasks.filter((task) => {
+            if ( ! task.get ) {
+                console.log('this is not an immutable');
+                console.log(task);
+            }
             var type = task.get('type');
 
             if (type === 'daily') {
@@ -82,8 +92,6 @@ class TaskStore extends Store {
      * generated.
      */
     handleSaveTask(task) {
-        // console.log(this.state.tasks.get(task.get('id').toString()));
-        console.log(this.state.tasks.toJS());
         var tasks = this.state.tasks.set(task.get('id').toString(), task);
         this.setState({
             tasks
@@ -96,7 +104,7 @@ class TaskStore extends Store {
     handleDeleteTask(task) {
         this.setState({
             tasks: this.state.tasks.delete(task.get('id'))
-        })
+        });
     }
 
     /**
@@ -115,6 +123,21 @@ class TaskStore extends Store {
             tasks: tasks_i
         });
     }
+
+    beginUpdateTaskScore(task, direction) {
+        var id = task.get('id').toString();
+        var updatedTask = this.state.tasks.get(id).set('completed', (direction === 'up') ? true : false);
+
+        this.setState({
+            tasks: this.state.tasks.set(id, updatedTask)
+        });
+    }
+
+    successUpdateTaskScore() {
+        console.log(arguments);
+    }
+
+
 };
 
 export default TaskStore;

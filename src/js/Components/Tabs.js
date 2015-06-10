@@ -12,6 +12,10 @@ var isTaskType = function isTaskType(type) {
     };
 }
 
+function byText(task1, task2) {
+    return task1.get('text').localeCompare(task2.get('text'));
+}
+
 var isHabit = isTaskType('habit'),
     isDaily = isTaskType('daily'),
     isTodo  = isTaskType('todo');
@@ -20,7 +24,7 @@ var HabitsView = React.createClass({
     render: function() {
         var habits;
         if (this.props.todos) {
-            habits = this.props.todos.filter(isHabit).map(function (item) {
+            habits = this.props.todos.filter(isHabit).sort(byText).map(function (item) {
                 return <FluxComponent flux={this.props.flux}><EditableHabitItem item={item} /></FluxComponent>;
             }.bind(this));
         }
@@ -45,7 +49,7 @@ var HabitsView = React.createClass({
 
 var DailiesView = React.createClass({
     render: function() {
-        var dailies = this.props.todos.filter(isDaily).map(function (item) {
+        var dailies = this.props.todos.filter(isDaily).sort(byText).map(function (item) {
             return <FluxComponent flux={this.props.flux}><EditableDailyItem item={item} /></FluxComponent>;
         }.bind(this));
 
@@ -60,7 +64,7 @@ var DailiesView = React.createClass({
 
 var TodosView = React.createClass({
     render: function() {
-        var todos = this.props.todos.filter(isTodo).map(function (item) {
+        var todos = this.props.todos.filter(isTodo).sort(byText).map(function (item) {
             return <FluxComponent flux={this.props.flux}><EditableTodoItem item={item} /></FluxComponent>
         }.bind(this));
 

@@ -1,16 +1,21 @@
 var Flux = require('flummox').Flux;
-import TaskActions from './TaskActions';
+
 var TaskStore = require('./TaskStore');
 
-class AppFlux extends Flux {
+function AppFluxFactory(api) {
+    var TaskActions = require('./TaskActions')(api);
 
-    constructor() {
-        super();
+    return class AppFlux extends Flux {
 
-        this.createActions('tasks', TaskActions);
-        this.createStore('tasks', TaskStore, this);
+        constructor() {
+            super();
+
+            this.createActions('tasks', TaskActions);
+            this.createStore('tasks', TaskStore, this);
+        }
+
     }
 
 }
 
-export default AppFlux;
+export default AppFluxFactory;
