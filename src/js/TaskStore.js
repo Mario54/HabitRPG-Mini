@@ -39,7 +39,6 @@ class TaskStore extends Store {
      * Returns all the tasks that are active today.
      */
     getTodaysTasks() {
-        console.log('accessing todays tasks');
         if ( ! this.state.tasks) {
             return;
         }
@@ -83,6 +82,8 @@ class TaskStore extends Store {
      * generated.
      */
     handleSaveTask(task) {
+        // console.log(this.state.tasks.get(task.get('id').toString()));
+        console.log(this.state.tasks.toJS());
         var tasks = this.state.tasks.set(task.get('id').toString(), task);
         this.setState({
             tasks
@@ -102,8 +103,13 @@ class TaskStore extends Store {
      * Overwrites all the tasks in the applications with the ones sent in.
      */
     handleLoadAllTasks(tasks) {
-        console.log(tasks);
-        var tasks_i = Immutable.fromJS(tasks);
+        // converts the array of tasks to a HashMap
+        var tasksMap = {};
+        tasks.forEach(function (task) {
+            tasksMap[task.id] = task;
+        });
+
+        var tasks_i = Immutable.fromJS(tasksMap);
 
         this.setState({
             tasks: tasks_i
