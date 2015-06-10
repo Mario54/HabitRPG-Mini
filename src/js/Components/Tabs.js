@@ -22,17 +22,27 @@ var isHabit = isTaskType('habit'),
 
 var HabitsView = React.createClass({
     render: function() {
-        var habits;
+        var habits,
+            display;
+
         if (this.props.todos) {
             habits = this.props.todos.filter(isHabit).sort(byText).map(function (item) {
                 return <FluxComponent flux={this.props.flux}><EditableHabitItem item={item} /></FluxComponent>;
             }.bind(this));
         }
 
+        console.log(habits);
+
+        if (habits && habits.isEmpty()) {
+            display = <span>There are no habits to display.</span>;
+        } else {
+            display = <ComponentList components={habits} />;
+        }
+
 
         return (
             <div>
-                <ComponentList components={habits} />
+                {display}
             </div>
         );
     },
@@ -48,13 +58,23 @@ var HabitsView = React.createClass({
 
 var DailiesView = React.createClass({
     render: function() {
+        var display;
+
         var dailies = this.props.todos.filter(isDaily).sort(byText).map(function (item) {
             return <FluxComponent flux={this.props.flux}><EditableDailyItem item={item} /></FluxComponent>;
         }.bind(this));
 
+        console.log(dailies);
+
+        if (dailies.isEmpty()) {
+            display = <span>There are no dailies to display.</span>;
+        } else {
+            display = <ComponentList components={dailies} />;
+        }
+
         return (
             <div>
-                <ComponentList components={dailies} />
+                {display}
             </div>
         );
     }
@@ -62,13 +82,21 @@ var DailiesView = React.createClass({
 
 var TodosView = React.createClass({
     render: function() {
+        var display;
+
         var todos = this.props.todos.filter(isTodo).sort(byText).map(function (item) {
             return <FluxComponent flux={this.props.flux}><EditableTodoItem item={item} /></FluxComponent>
         }.bind(this));
 
+        if (todos.isEmpty()) {
+            display = <span>There are no to-dos to display.</span>;
+        } else {
+            display = <ComponentList components={todos} />;
+        }
+
         return (
             <div>
-                <ComponentList components={todos} />
+                {display}
             </div>
         );
     },
