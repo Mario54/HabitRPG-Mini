@@ -8,16 +8,19 @@ var tabs = [
     { title: "To-Dos", component: TodosView }
 ];
 
-function HabitRPGFactory({React}) {
+function HabitRPGFactory( { React } ) {
+
     var HabitRPG = React.createClass({
         render: function() {
             return (
-                <FluxComponent connectToStores={['tasks']}
-                               stateGetter={([taskStore]) =>({
-                                   tasks: taskStore.getTodaysTasks()
-                               })}>
-                    <TabView tabs={tabs} />
-                </FluxComponent>
+                <div>
+                    <FluxComponent connectToStores={['tasks']}
+                                   stateGetter={([taskStore]) =>({
+                                       tasks: taskStore.getTodaysTasks()
+                                   })}>
+                        <TabView tabs={tabs} />
+                    </FluxComponent>
+                </div>
             );
         }
     });

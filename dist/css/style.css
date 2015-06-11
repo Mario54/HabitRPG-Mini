@@ -1,0 +1,161 @@
+.error-display {
+    color: white;
+    background-color: red;
+    display: block;
+    text-align: center;
+}
+
+/* Base for label styling */
+[type="checkbox"]:not(:checked),
+[type="checkbox"]:checked {
+  position: absolute;
+  left: -9999px;
+}
+
+[type="checkbox"]:not(:checked) + label,
+[type="checkbox"]:checked + label {
+  position: relative;
+  padding-left: 35px;
+  top: 1px;
+  padding-top: 1px;
+  cursor: pointer;
+}
+
+/* checkbox aspect */
+[type="checkbox"]:not(:checked) + label:before,
+[type="checkbox"]:checked + label:before {
+  content: '';
+  position: absolute;
+  left:0; top: 1px;
+  width: 16px; height: 16px;
+  border: 1px solid #aaa;
+  background: #f8f8f8;
+  border-radius: 3px;
+  box-shadow: inset 0 1px 3px rgba(0,0,0,.3)
+}
+/* checked mark aspect */
+[type="checkbox"]:not(:checked) + label:after,
+[type="checkbox"]:checked + label:after {
+    content: '✔';
+    position: absolute;
+    top: 1px;
+    left: 3px;
+    font-size: 15px;
+    color: #337AB7;
+    transition: all .2s;
+}
+/* checked mark aspect changes */
+[type="checkbox"]:not(:checked) + label:after {
+  opacity: 0;
+  transform: scale(0);
+}
+
+[type="checkbox"]:not(:checked) + label,
+[type="checkbox"]:checked + label {
+    transition: text-decoration 0.3s;
+}
+
+[type="checkbox"]:checked + label {
+    text-decoration: line-through;
+}
+
+[type="checkbox"]:checked + label:after {
+  opacity: 1;
+  transform: scale(1);
+}
+/* disabled checkbox */
+[type="checkbox"]:disabled:not(:checked) + label:before,
+[type="checkbox"]:disabled:checked + label:before {
+  box-shadow: none;
+  border-color: #bbb;
+  background-color: #ddd;
+}
+[type="checkbox"]:disabled:checked + label:after {
+  color: #999;
+}
+[type="checkbox"]:disabled + label {
+  color: #aaa;
+}
+/* accessibility */
+[type="checkbox"]:checked:focus + label:before,
+[type="checkbox"]:not(:checked):focus + label:before {
+  border: 1px dotted blue;
+}
+
+/* hover style just for information */
+label:hover:before {
+  border: 1px solid #4778d9!important;
+}
+
+button.minusButton {
+    color: white;
+    background-color: red;
+    border: 1px solid black ;
+}
+
+button.minusButton:active  {
+    background-color: red;
+}
+
+button.habitButton {
+    margin-right: 0.3em;
+    border-radius: 5px;
+    color: white;
+    width: 1.5em;
+    margin-bottom: 0.1em;
+}
+
+button.plusButton {
+    color: white;
+    background-color: green;
+    border: 1px solid black ;
+    border-radius: 5px;
+    margin-right: 0.3em;
+}
+
+button.plusButton:active  {
+    background-color: red;
+}
+
+ul.habitControls {
+    list-style-type: none;
+}
+
+ul.habitControls li {
+    width: 500px;
+}
+
+ul.habit-controls {
+    list-style-type: none;
+    padding: 0;
+    display: inline-block;
+    width: 50px;
+}
+
+ul.habit-controls li {
+    width: 50px;
+    padding: 0;
+    display: inline-block;
+    margin: 0;
+    border: 0;
+}
+
+label {
+    display: inline;
+    max-width: 100%;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+.habit-text {
+    display: inline;
+    position: absolute;
+    left: 50px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.habit-controls {
+    display: inline-block;
+}

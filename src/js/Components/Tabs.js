@@ -16,6 +16,8 @@ function byText(task1, task2) {
     return task1.get('text').localeCompare(task2.get('text'));
 }
 
+// TODO Refactor to deal with empty lists in one component (too much repetition).
+
 var isHabit = isTaskType('habit'),
     isDaily = isTaskType('daily'),
     isTodo  = isTaskType('todo');
@@ -30,8 +32,6 @@ var HabitsView = React.createClass({
                 return <FluxComponent flux={this.props.flux}><EditableHabitItem item={item} /></FluxComponent>;
             }.bind(this));
         }
-
-        console.log(habits);
 
         if (habits && habits.isEmpty()) {
             display = <span>There are no habits to display.</span>;
@@ -48,7 +48,6 @@ var HabitsView = React.createClass({
     },
 
     addNewHabit(text) {
-        console.log(text);
         this.props.flux.getActions('tasks').newTask({
             text,
             type: 'habit'
@@ -58,15 +57,16 @@ var HabitsView = React.createClass({
 
 var DailiesView = React.createClass({
     render: function() {
-        var display;
+        var display,
+            dailies;
 
-        var dailies = this.props.todos.filter(isDaily).sort(byText).map(function (item) {
-            return <FluxComponent flux={this.props.flux}><EditableDailyItem item={item} /></FluxComponent>;
-        }.bind(this));
+        if (this.props.todos) {
+            dailies = this.props.todos.filter(isDaily).sort(byText).map(function (item) {
+                return <FluxComponent flux={this.props.flux}><EditableDailyItem item={item} /></FluxComponent>;
+            }.bind(this));
+        }
 
-        console.log(dailies);
-
-        if (dailies.isEmpty()) {
+        if (dailies && dailies.isEmpty()) {
             display = <span>There are no dailies to display.</span>;
         } else {
             display = <ComponentList components={dailies} />;
@@ -82,13 +82,16 @@ var DailiesView = React.createClass({
 
 var TodosView = React.createClass({
     render: function() {
-        var display;
+        var display,
+            todos;
 
-        var todos = this.props.todos.filter(isTodo).sort(byText).map(function (item) {
-            return <FluxComponent flux={this.props.flux}><EditableTodoItem item={item} /></FluxComponent>
-        }.bind(this));
+        if (this.props.todos) {
+            todos = this.props.todos.filter(isTodo).sort(byText).map(function (item) {
+                return <FluxComponent flux={this.props.flux}><EditableTodoItem item={item} /></FluxComponent>
+            }.bind(this));
+        }
 
-        if (todos.isEmpty()) {
+        if (todos && todos.isEmpty()) {
             display = <span>There are no to-dos to display.</span>;
         } else {
             display = <ComponentList components={todos} />;

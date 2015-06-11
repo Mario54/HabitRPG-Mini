@@ -1,6 +1,7 @@
 function ItemsFactory({React}) {
     var EditItem = require('./EditItem')({React});
     var TextEdit = require('./TextEdit')({React});
+    var HabitControls = require('./HabitControls')({React});
 
     var EditableDailyItem = React.createClass({
         render() {
@@ -8,7 +9,7 @@ function ItemsFactory({React}) {
                                  displayComponent={EditableTaskTextComponent}
                                  editAction={this.saveItem}
                                  item={this.props.item} />;*/
-            var item = <span>{this.props.item.get('text')}</span>;
+            var item = <label onClick={this.toggleComplete}>{this.props.item.get('text')}</label>;
 
             return (<div>
                         <input type="checkbox" onChange={this.toggleComplete} checked={this.props.item.get('completed')} />
@@ -17,7 +18,8 @@ function ItemsFactory({React}) {
         },
 
         toggleComplete(e) {
-            var completed = e.target.checked;
+            console.log('hello');
+            var completed = ! this.props.item.get('completed');
             var item = this.props.item.set('completed', completed);
 
             console.log('Saving item');
@@ -37,7 +39,7 @@ function ItemsFactory({React}) {
                                  editAction={this.saveItem}
                                  item={this.props.item} />;*/
 
-            var item = <span>{this.props.item.get('text')}</span>;
+            var item = <label onClick={this.toggleComplete}>{this.props.item.get('text')}</label>;
 
             return (<div>
                         <input type="checkbox" onClick={this.toggleComplete} checked={this.props.item.completed} />
@@ -61,28 +63,21 @@ function ItemsFactory({React}) {
     var EditableHabitItem = React.createClass({
         render() {
             var habit = this.props.item,
-                upButton = <button onClick={this.upButtonClicked} type="button">+</button>,
-                downButton = <button onClick={this.downButtonClicked} type="button">-</button>;
-
-            if ( ! habit.get('up')) {
-                upButton = "";
-            }
-
-            if ( ! habit.get('down')) {
-                downButton = "";
-            }
+                buttons = <HabitControls showPlus={habit.get('up')}
+                                         showMinus={habit.get('down')}
+                                         upButtonClicked={this.upButtonClicked}
+                                         downButtonClicked={this.downButtonClicked} />
 
             /*var item = <EditItem editComponent={TextEdit}
                                  displayComponent={EditableTaskTextComponent}
                                  editAction={this.saveItem}
                                  item={this.props.item} />;*/
 
-            var item = <span>{this.props.item.get('text')}</span>;
+            var item = <label>{this.props.item.get('text')}</label>;
 
-            return (<div>
-                        {upButton}
-                        {downButton}
-                        {item}
+            return (<div className="habit-wrap">
+                        <div className="habit-controls">{buttons}</div>
+                        <div className="habit-text">{item}</div>
                     </div>);
         },
 
