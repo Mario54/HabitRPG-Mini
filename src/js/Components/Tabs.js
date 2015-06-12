@@ -5,28 +5,9 @@ var React = require('react');
 var NewItemForm = require('./NewItemForm')({React});
 var ComponentList = require('./ComponentList')({React});
 var { EditableHabitItem, EditableTodoItem, EditableDailyItem } = require('./Items.js')({React});
-
-var isTaskType = function isTaskType(type) {
-    return function (item) {
-        return item && item.get('type') === type;
-    };
-}
-
-function byText(task1, task2) {
-    if ( !task1.get('completed') && task2.get('completed')) {
-        return -1;
-    } else if (task1.get('completed') && !task2.get('completed')) {
-        return 1;
-    }
-
-    return task1.get('text').localeCompare(task2.get('text'));
-}
+var helpers = require('../helpers');
 
 // TODO Refactor to deal with empty lists in one component (too much repetition).
-
-var isHabit = isTaskType('habit'),
-    isDaily = isTaskType('daily'),
-    isTodo  = isTaskType('todo');
 
 var HabitsView = React.createClass({
     render: function() {
@@ -34,7 +15,7 @@ var HabitsView = React.createClass({
             display;
 
         if (this.props.todos) {
-            habits = this.props.todos.filter(isHabit).sort(byText).map(function (item) {
+            habits = this.props.todos.filter(helpers.isHabit).sort(helpers.orderTasks).map(function (item) {
                 return <FluxComponent flux={this.props.flux}><EditableHabitItem item={item} /></FluxComponent>;
             }.bind(this));
         }
@@ -67,7 +48,7 @@ var DailiesView = React.createClass({
             dailies;
 
         if (this.props.todos) {
-            dailies = this.props.todos.filter(isDaily).sort(byText).map(function (item) {
+            dailies = this.props.todos.filter(helpers.isDaily).sort(helpers.orderTasks).map(function (item) {
                 return <FluxComponent flux={this.props.flux}><EditableDailyItem item={item} /></FluxComponent>;
             }.bind(this));
         }
@@ -97,23 +78,14 @@ var TodosView = React.createClass({
         var display,
             todos;
 
-        var filterCompleted = function(showCompleted) {
-            return function (todo) {
-                if (showCompleted) return true;
-
-                if (todo.get('completed')) {
-                    return false;
-                }
-
-                return true;
-            }
-        }
+        var filterCompleted = helpers.filterCompleted(this.state.showCompleted);
 
         if (this.props.todos) {
-            todos = this.props.todos.
-                filter(filterCompleted(this.state.showCompleted)).
-                filter(isTodo).sort(byText).
-                map(function (item) {
+            todos = this.props.todos
+                .filter(filterCompleted)
+                .filter(helpers.isTodo)
+                .sort(helpers.orderTasks)
+                .map(function (item) {
                     return <FluxComponent flux={this.props.flux}>
                                <EditableTodoItem item={item} />
                            </FluxComponent>
