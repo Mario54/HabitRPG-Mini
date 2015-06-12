@@ -13,6 +13,12 @@ var isTaskType = function isTaskType(type) {
 }
 
 function byText(task1, task2) {
+    if ( !task1.get('completed') && task2.get('completed')) {
+        return -1;
+    } else if (task1.get('completed') && !task2.get('completed')) {
+        return 1;
+    }
+
     return task1.get('text').localeCompare(task2.get('text'));
 }
 
@@ -81,14 +87,37 @@ var DailiesView = React.createClass({
 });
 
 var TodosView = React.createClass({
+    getInitialState() {
+        return {
+            showCompleted: true
+        }
+    },
+
     render: function() {
         var display,
             todos;
 
+        var filterCompleted = function(showCompleted) {
+            return function (todo) {
+                if (showCompleted) return true;
+
+                if (todo.get('completed')) {
+                    return false;
+                }
+
+                return true;
+            }
+        }
+
         if (this.props.todos) {
-            todos = this.props.todos.filter(isTodo).sort(byText).map(function (item) {
-                return <FluxComponent flux={this.props.flux}><EditableTodoItem item={item} /></FluxComponent>
-            }.bind(this));
+            todos = this.props.todos.
+                filter(filterCompleted(this.state.showCompleted)).
+                filter(isTodo).sort(byText).
+                map(function (item) {
+                    return <FluxComponent flux={this.props.flux}>
+                               <EditableTodoItem item={item} />
+                           </FluxComponent>
+                }.bind(this));
         }
 
         if (todos && todos.isEmpty()) {
@@ -100,8 +129,19 @@ var TodosView = React.createClass({
         return (
             <div>
                 {display}
+                <button>Mark all as completed</button>
+
+                <button onClick={this.toggleShowCompleted}>
+                    {this.state.showCompleted ? "Hide" : "Show"} Completed
+                </button>
             </div>
         );
+    },
+
+    toggleShowCompleted() {
+        var showCompleted = ! this.state.showCompleted;
+
+        this.setState({ showCompleted });
     },
 
     newTodoItem(text) {

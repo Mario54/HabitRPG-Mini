@@ -8,6 +8,8 @@ var tabs = [
     { title: "To-Dos", component: TodosView }
 ];
 
+var includeCompletedTodos = true;
+
 function HabitRPGFactory( { React } ) {
 
     var HabitRPG = React.createClass({
@@ -16,7 +18,7 @@ function HabitRPGFactory( { React } ) {
                 <div>
                     <FluxComponent connectToStores={['tasks']}
                                    stateGetter={([taskStore]) =>({
-                                       tasks: taskStore.getTodaysTasks()
+                                       tasks: taskStore.getTodaysTasks({includeCompletedTodos})
                                    })}>
                         <TabView tabs={tabs} />
                     </FluxComponent>

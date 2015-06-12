@@ -39,7 +39,7 @@ function ItemsFactory({React}) {
             var item = <label onClick={this.toggleComplete}>{this.props.item.get('text')}</label>;
 
             return (<div>
-                        <input type="checkbox" onClick={this.toggleComplete} checked={this.props.item.completed} />
+                        <input type="checkbox" onClick={this.toggleComplete} checked={this.props.item.get('completed')} />
                         {item}
                     </div>);
         },

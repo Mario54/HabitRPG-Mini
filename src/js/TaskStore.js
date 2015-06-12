@@ -44,7 +44,13 @@ class TaskStore extends Store {
     /**
      * Returns all the tasks that are active today.
      */
-    getTodaysTasks() {
+    getTodaysTasks(options) {
+        var includeCompletedTodos;
+
+        if (options) {
+            includeCompletedTodos = options.includeCompletedTodos;
+        }
+
         if ( ! this.state.tasks) {
             return;
         }
@@ -66,6 +72,10 @@ class TaskStore extends Store {
 
                 return false;
             } else if (type === 'todo') {
+                if (includeCompletedTodos) {
+                    return true;
+                }
+
                 if ( ! task.get('completed')) {
                     return true;
                 }
