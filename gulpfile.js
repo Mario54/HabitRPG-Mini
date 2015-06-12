@@ -3,7 +3,9 @@
 var gulp   = require('gulp'),
     source = require('vinyl-source-stream'),
     gutil  = require('gulp-util'),
-    path = require('path');
+    path = require('path'),
+    uglify = require('gulp-uglify'),
+    buffer = require('vinyl-buffer');
 
 gulp.task('watch', function () {
     var watchify   = require('watchify'),
@@ -51,10 +53,10 @@ gulp.task('build', function () {
         insertGlobals: true
     }).transform(babelify, {
         optional: ["es7.classProperties"]
-    }).transform({
-        global: true
-    }, 'uglifyify').bundle()
+    }).bundle()
         .pipe(source('bundle.js'))
+        .pipe(buffer())
+        .pipe(uglify())
         .pipe(gulp.dest('./dist/js'))
         .on('end', function () {
             gutil.log('Finished bundling');
