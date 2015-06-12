@@ -93,9 +93,7 @@ button.minusButton {
 
 }
 
-button.minusButton:active  {
-    background-color: red;
-}
+
 
 button.habitButton {
     border-radius: 8px;
@@ -111,8 +109,18 @@ button.plusButton {
     background-color: green;
 }
 
-button.plusButton:active  {
-    background-color: red;
+button.plusButton:hover {
+    background-image:
+        linear-gradient(
+            green, #009900
+        );
+}
+
+button.minusButton:hover  {
+    background-image:
+        linear-gradient(
+            red, #CC0000
+        );
 }
 
 ul.habitControls {
