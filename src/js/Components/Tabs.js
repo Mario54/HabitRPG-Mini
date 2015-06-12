@@ -15,9 +15,12 @@ var HabitsView = React.createClass({
             display;
 
         if (this.props.todos) {
-            habits = this.props.todos.filter(helpers.isHabit).sort(helpers.orderTasks).map(function (item) {
-                return <FluxComponent flux={this.props.flux}><EditableHabitItem item={item} /></FluxComponent>;
-            }.bind(this));
+            habits = this.props.todos
+                .filter(helpers.isHabit)
+                .sort(helpers.orderTasks)
+                .map(function (item) {
+                    return <FluxComponent flux={this.props.flux}><EditableHabitItem item={item} /></FluxComponent>;
+                }.bind(this));
         }
 
         if (habits && habits.isEmpty()) {
@@ -43,14 +46,26 @@ var HabitsView = React.createClass({
 });
 
 var DailiesView = React.createClass({
+    getInitialState() {
+        return {
+            showCompleted: true
+        };
+    },
+
     render: function() {
         var display,
             dailies;
 
+        var filterCompleted = helpers.filterCompleted(this.state.showCompleted);
+
         if (this.props.todos) {
-            dailies = this.props.todos.filter(helpers.isDaily).sort(helpers.orderTasks).map(function (item) {
-                return <FluxComponent flux={this.props.flux}><EditableDailyItem item={item} /></FluxComponent>;
-            }.bind(this));
+            dailies = this.props.todos
+                .filter(helpers.isDaily)
+                .filter(filterCompleted)
+                .sort(helpers.orderTasks)
+                .map(function (item) {
+                    return <FluxComponent flux={this.props.flux}><EditableDailyItem item={item} /></FluxComponent>;
+                }.bind(this));
         }
 
         if (dailies && dailies.isEmpty()) {
@@ -62,8 +77,18 @@ var DailiesView = React.createClass({
         return (
             <div>
                 {display}
+
+                <button onClick={this.toggleShowCompleted}>
+                    {this.state.showCompleted ? "Hide" : "Show"} Completed
+                </button>
             </div>
         );
+    },
+
+    toggleShowCompleted() {
+        var showCompleted = ! this.state.showCompleted;
+
+        this.setState({ showCompleted });
     }
 });
 
