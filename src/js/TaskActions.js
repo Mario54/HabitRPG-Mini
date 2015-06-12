@@ -12,6 +12,10 @@ function TaskActionsFactory(api) {
             return task;
         }
 
+        /**
+         * Updates the score of a task with the specified direction.
+         * Returns a promise from a http get request.
+         */
         updateTaskScore(task, direction) {
             var promise = new Promise(function (resolve, reject) {
             //   get('http://www.google.com', function (err, res) {

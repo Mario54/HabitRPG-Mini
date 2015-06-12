@@ -18,12 +18,9 @@ function ItemsFactory({React}) {
         },
 
         toggleComplete(e) {
-            console.log('hello');
             var completed = ! this.props.item.get('completed');
             var item = this.props.item.set('completed', completed);
 
-            console.log('Saving item');
-            console.log(item.toJS());
             this.props.flux.getActions('tasks').updateTaskScore(item, completed ? 'up' : 'down');
         },
 
