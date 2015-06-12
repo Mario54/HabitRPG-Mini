@@ -9,7 +9,6 @@ function ComponentListFactory({React}) {
                 });
             }
 
-
             return (
                 <ul className="list-group">
                     {components}

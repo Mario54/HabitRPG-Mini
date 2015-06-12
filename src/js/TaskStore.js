@@ -53,7 +53,9 @@ class TaskStore extends Store {
             if ( ! task.get ) {
                 console.log('this is not an immutable');
                 console.log(task);
+                return false;
             }
+
             var type = task.get('type');
 
             if (type === 'daily') {
@@ -136,7 +138,6 @@ class TaskStore extends Store {
     successUpdateTaskScore() {
         console.log(arguments);
     }
-
 
 };
 
