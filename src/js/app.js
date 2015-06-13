@@ -1,12 +1,11 @@
 var React = require("react");
 var FluxComponent = require("flummox/component");
 var HabitRPG = require("./Components/HabitRPG")( {React} );
+var config = require("./config");
 
 // API
 var Habitapi = require("habitrpg-api");
-var userId = ;
-var apiKey = ;
-var api = new Habitapi(userId, apiKey);
+var api = new Habitapi(config.userId, config.apiKey);
 
 // Flux
 var AppFlux = require("./Flux")(api);
