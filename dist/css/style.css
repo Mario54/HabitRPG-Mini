@@ -5,6 +5,10 @@
     text-align: center;
 }
 
+#content {
+	width: 40em;
+}
+
 /* Base for label styling */
 [type="checkbox"]:not(:checked),
 [type="checkbox"]:checked {
