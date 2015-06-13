@@ -18,7 +18,7 @@ function HabitRPGFactory( { React } ) {
             return (
                 <div>
                     <FluxComponent connectToStores={["tasks"]}
-                                   stateGetter={([taskStore]) =>({
+                                   stateGetter={([taskStore]) => ({
                                        tasks: taskStore.getTodaysTasks({includeCompletedTodos})
                                    })}>
                         <TabView tabs={tabs} />

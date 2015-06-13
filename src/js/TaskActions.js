@@ -18,10 +18,6 @@ function TaskActionsFactory(api) {
          */
         updateTaskScore(task, direction) {
             var promise = new Promise(function (resolve, reject) {
-            //   get('http://www.google.com', function (err, res) {
-            //     if (err) reject(err);
-            //     else resolve(res);
-            //   });
               api.updateTaskScore(task.get("id"), direction, function(error, response) {
                   // mutating = bad, use object assign?
                   var message = response;
@@ -34,7 +30,6 @@ function TaskActionsFactory(api) {
             });
 
             return promise;
-
         }
 
         deleteTask(task) {
