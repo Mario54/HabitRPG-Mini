@@ -3,7 +3,7 @@ function NewItemFormFactory({React}) {
     var NewItemForm = React.createClass({
         getInitialState() {
             return {
-                text: ''
+                text: ""
             };
         },
 
@@ -19,7 +19,7 @@ function NewItemFormFactory({React}) {
         submitForm() {
             this.props.submit(this.state.text);
             this.setState({
-                text: ''
+                text: ""
             });
         },
 

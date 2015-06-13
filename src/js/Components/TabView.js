@@ -1,4 +1,6 @@
-var React = require('react');
+/*eslint-env node */
+
+var React = require("react");
 
 var Tab = React.createClass({
     render: function() {
@@ -16,7 +18,7 @@ var Tab = React.createClass({
 var TabGroup = React.createClass({
     render: function() {
         var tabs = this.props.tabs.map( (tab, i) => {
-            return <Tab key={i} active={this.props.current === i} tab={tab} switchTab={this.props.switchTab(i)} />
+            return <Tab key={i} active={this.props.current === i} tab={tab} switchTab={this.props.switchTab(i)} />;
         }.bind(this));
 
         return (
@@ -32,13 +34,13 @@ var TabView = React.createClass({
     getInitialState: function () {
         return {
             currentTab: 0
-        }
+        };
     },
 
     render: function() {
         var currentTab = this.state.currentTab;
 
-        var TabView = React.createElement(this.props.tabs[this.state.currentTab].component, {
+        var TabViewElement = React.createElement(this.props.tabs[this.state.currentTab].component, {
             todos: this.props.tasks && this.props.tasks.toList(),
             flux: this.props.flux
         });
@@ -47,7 +49,7 @@ var TabView = React.createClass({
             <TabGroup tabs={this.props.tabs} current={currentTab} switchTab={this.switchTab} />
 
             <div>
-                {TabView}
+                {TabViewElement}
             </div>
         </div>);
     },

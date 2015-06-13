@@ -1,7 +1,7 @@
-import { Store } from 'flummox';
+import { Store } from "flummox";
 
 class ErrorStore extends Store {
-    constructor(flux) {
+    constructor(/* flux */) {
         super();
 
     }

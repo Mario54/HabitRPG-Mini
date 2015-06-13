@@ -1,17 +1,17 @@
-import { Store } from 'flummox';
-import Immutable from 'immutable';
-import assign    from 'object-assign';
-import uuid      from 'uuid';
+import { Store } from "flummox";
+import Immutable from "immutable";
+import assign from "object-assign";
+import uuid from "uuid";
 
 function getDayString(day) {
     var days = {
-        0: 'su',
-        1: 'm',
-        2: 't',
-        3: 'w',
-        4: 'th',
-        5: 'f',
-        6: 's'
+        0: "su",
+        1: "m",
+        2: "t",
+        3: "w",
+        4: "th",
+        5: "f",
+        6: "s"
     };
 
     return days[day];
@@ -22,7 +22,7 @@ class TaskStore extends Store {
     constructor(flux) {
         super();
 
-        const taskActions = flux.getActions('tasks');
+        const taskActions = flux.getActions("tasks");
         this.register(taskActions.newTask, this.handleNewTask);
         this.register(taskActions.saveTask, this.handleSaveTask);
         this.register(taskActions.deleteTask, this.handleDeleteTask);
@@ -51,32 +51,30 @@ class TaskStore extends Store {
             includeCompletedTodos = options.includeCompletedTodos;
         }
 
-        if ( ! this.state.tasks) {
-            return;
+        if ( !this.state.tasks ) {
+            return Immutable.List();
         }
 
         return this.state.tasks.filter((task) => {
-            if ( ! task.get ) {
-                console.log('this is not an immutable');
-                console.log(task);
+            if ( !task.get ) {
                 return false;
             }
 
-            var type = task.get('type');
+            var type = task.get("type");
 
-            if (type === 'daily') {
+            if (type === "daily") {
                 var currentDay = getDayString((new Date()).getDay());
-                if (task.get('repeat').get(currentDay)) {
+                if (task.get("repeat").get(currentDay)) {
                     return true;
                 }
 
                 return false;
-            } else if (type === 'todo') {
+            } else if (type === "todo") {
                 if (includeCompletedTodos) {
                     return true;
                 }
 
-                if ( ! task.get('completed')) {
+                if ( !task.get("completed") ) {
                     return true;
                 }
 
@@ -95,7 +93,7 @@ class TaskStore extends Store {
         var todo = Immutable.fromJS(assign({}, content, { id: uuid.v4() }));
 
         this.setState({
-            tasks: this.state.tasks.set(todo.get('id'), todo)
+            tasks: this.state.tasks.set(todo.get("id"), todo)
         });
     }
 
@@ -104,7 +102,7 @@ class TaskStore extends Store {
      * generated.
      */
     handleSaveTask(task) {
-        var tasks = this.state.tasks.set(task.get('id').toString(), task);
+        var tasks = this.state.tasks.set(task.get("id").toString(), task);
         this.setState({
             tasks
         });
@@ -115,7 +113,7 @@ class TaskStore extends Store {
      */
     handleDeleteTask(task) {
         this.setState({
-            tasks: this.state.tasks.delete(task.get('id'))
+            tasks: this.state.tasks.delete(task.get("id"))
         });
     }
 
@@ -129,16 +127,16 @@ class TaskStore extends Store {
             tasksMap[task.id] = task;
         });
 
-        var tasks_i = Immutable.fromJS(tasksMap);
+        var tasksI = Immutable.fromJS(tasksMap);
 
         this.setState({
-            tasks: tasks_i
+            tasks: tasksI
         });
     }
 
     beginUpdateTaskScore(task, direction) {
-        var id = task.get('id').toString();
-        var updatedTask = this.state.tasks.get(id).set('completed', (direction === 'up') ? true : false);
+        var id = task.get("id").toString();
+        var updatedTask = this.state.tasks.get(id).set("completed", (direction === "up") ? true : false);
 
         this.setState({
             tasks: this.state.tasks.set(id, updatedTask)
@@ -146,9 +144,9 @@ class TaskStore extends Store {
     }
 
     successUpdateTaskScore() {
-        console.log(arguments);
+        // console.log(arguments);
     }
 
-};
+}
 
 export default TaskStore;

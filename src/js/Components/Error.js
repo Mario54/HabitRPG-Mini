@@ -1,13 +1,13 @@
 
 function ErrorFactory({ React }) {
 
-    var Error = React.createClass({
+    var ErrorComponent = React.createClass({
         render() {
-            return <div className="error-display">{this.props.errorMessage}</div>
+            return <div className="error-display">{this.props.errorMessage}</div>;
         }
     });
 
-    return Error;
+    return ErrorComponent;
 }
 
 export default ErrorFactory;

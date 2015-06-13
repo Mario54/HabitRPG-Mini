@@ -1,11 +1,12 @@
-'use strict';
-import { List } from 'immutable';
-import FluxComponent from 'flummox/component';
-var React = require('react');
-var NewItemForm = require('./NewItemForm')({React});
-var ComponentList = require('./ComponentList')({React});
-var { EditableHabitItem, EditableTodoItem, EditableDailyItem } = require('./Items.js')({React});
-var helpers = require('../helpers');
+/*eslint-env node */
+"use strict";
+// import { List } from "immutable";
+import FluxComponent from "flummox/component";
+var React = require("react");
+// var NewItemForm = require("./NewItemForm")({React});
+var ComponentList = require("./ComponentList")({React});
+var { EditableHabitItem, EditableTodoItem, EditableDailyItem } = require("./Items.js")({React});
+var helpers = require("../helpers");
 
 // TODO Refactor to deal with empty lists in one component (too much repetition).
 
@@ -38,9 +39,9 @@ var HabitsView = React.createClass({
     },
 
     addNewHabit(text) {
-        this.props.flux.getActions('tasks').newTask({
+        this.props.flux.getActions("tasks").newTask({
             text,
-            type: 'habit'
+            type: "habit"
         });
     }
 });
@@ -142,7 +143,7 @@ var TodosView = React.createClass({
     },
 
     newTodoItem(text) {
-        this.props.flux.getActions('tasks').newTask(text);
+        this.props.flux.getActions("tasks").newTask(text);
     }
 });
 

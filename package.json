@@ -1,15 +1,18 @@
 {
-  "name": "HabitRPG_Client",
-  "version": "1.0.0",
-  "description": "",
+  "name": "HabitRPG-Mini",
+  "version": "0.1.0",
+  "description": "A minimalistic HabitRPG client",
   "main": "gulpfile.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
+  "author": "Mario Lamontagne",
   "license": "ISC",
   "devDependencies": {
+    "babel-eslint": "^3.1.15",
     "browserify": "^10.2.3",
+    "eslint": "^0.22.1",
+    "eslint-plugin-react": "^2.5.0",
     "flummox": "^3.5.2",
     "gulp": "^3.9.0",
     "gulp-uglify": "^1.2.0",

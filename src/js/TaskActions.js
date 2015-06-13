@@ -1,5 +1,6 @@
-import { Actions } from 'flummox';
-var Promise = require('promise');
+/*eslint-env node */
+import { Actions } from "flummox";
+var Promise = require("promise");
 
 function TaskActionsFactory(api) {
 
@@ -22,14 +23,14 @@ function TaskActionsFactory(api) {
             //     if (err) reject(err);
             //     else resolve(res);
             //   });
-              api.updateTaskScore(task.get('id'), direction, function(error, response) {
+              api.updateTaskScore(task.get("id"), direction, function(error, response) {
                   // mutating = bad, use object assign?
                   var message = response;
                   message.task = task;
                   message.direction = direction;
 
-                  if (error) reject(error);
-                  else resolve(message);
+                  if (error) { reject(error); }
+                  else { resolve(message); }
               });
             });
 

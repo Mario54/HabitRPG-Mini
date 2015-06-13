@@ -14,7 +14,7 @@ function HabitControlsFactory( { React }) {
 
             return (
                 <ul className="habit-controls">
-                    {this.props.showPlus  ? plusButton  : ""}
+                    {this.props.showPlus ? plusButton : ""}
                     {this.props.showMinus ? minusButton : ""}
                 </ul>
             );

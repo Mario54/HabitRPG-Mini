@@ -35,10 +35,10 @@ function EditItemFactory({React}) {
             var NormalComponent = this.props.displayComponent;
 
             if (this.state.editing) {
-                return <ItemEdit component={EditingComponent} item={this.props.item} finishEdit={this.onFinishEdit} />
+                return <ItemEdit component={EditingComponent} item={this.props.item} finishEdit={this.onFinishEdit} />;
             }
 
-            return <NormalComponent item={this.props.item} onEdit={this.editItem} />
+            return <NormalComponent item={this.props.item} onEdit={this.editItem} />;
         },
 
         editItem() {
