@@ -3,8 +3,16 @@
   "version": "0.1",
   "manifest_version": 2,
   "description": "A minimalistic HabitRPG Chrome Extension",
+  "permissions": [
+    "storage"
+  ],
   "browser_action": {
     "default_title": "HabitRPG Mini",
     "default_popup": "popup.html"
+  },
+  "options_ui": {
+    "page": "options.html",
+    "chrome_style": true
   }
+
 }
