@@ -1,4 +1,3 @@
-/*eslint-env node */
 
 var React = require("react");
 

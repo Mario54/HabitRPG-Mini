@@ -1,13 +1,11 @@
-/*eslint-env node, browser */
-
 var React = require("react");
 var FluxComponent = require("flummox/component");
-var HabitRPG = require("./Components/HabitRPG")( {React: React} );
+var HabitRPG = require("./Components/HabitRPG")( {React} );
 
 // API
 var Habitapi = require("habitrpg-api");
-var userId = "95bf6903-3a3b-4165-ab0c-d47ff063254e";
-var apiKey = "8ed53dad-8047-4fa9-be54-15131273bf6b";
+var userId = ;
+var apiKey = ;
 var api = new Habitapi(userId, apiKey);
 
 // Flux

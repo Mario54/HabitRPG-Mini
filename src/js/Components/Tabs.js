@@ -1,4 +1,4 @@
-/*eslint-env node */
+
 "use strict";
 // import { List } from "immutable";
 import FluxComponent from "flummox/component";
@@ -87,7 +87,7 @@ var DailiesView = React.createClass({
     },
 
     toggleShowCompleted() {
-        var showCompleted = ! this.state.showCompleted;
+        var showCompleted = !this.state.showCompleted;
 
         this.setState({ showCompleted });
     }
@@ -97,7 +97,7 @@ var TodosView = React.createClass({
     getInitialState() {
         return {
             showCompleted: true
-        }
+        };
     },
 
     render: function() {
@@ -114,7 +114,7 @@ var TodosView = React.createClass({
                 .map(function (item) {
                     return <FluxComponent flux={this.props.flux}>
                                <EditableTodoItem item={item} />
-                           </FluxComponent>
+                           </FluxComponent>;
                 }.bind(this));
         }
 
@@ -137,7 +137,7 @@ var TodosView = React.createClass({
     },
 
     toggleShowCompleted() {
-        var showCompleted = ! this.state.showCompleted;
+        var showCompleted = !this.state.showCompleted;
 
         this.setState({ showCompleted });
     },

@@ -1,4 +1,3 @@
-/*eslint-env node */
 import { Actions } from "flummox";
 var Promise = require("promise");
 

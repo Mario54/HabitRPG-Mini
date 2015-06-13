@@ -1,4 +1,3 @@
-/*eslint-env node */
 
 function ItemsFactory({React}) {
     // var EditItem = require("./EditItem")({React});

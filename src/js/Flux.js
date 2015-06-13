@@ -1,4 +1,3 @@
-/*eslint-env node*/
 var Flux = require("flummox").Flux;
 
 var TaskStore = require("./TaskStore");

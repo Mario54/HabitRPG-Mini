@@ -1,4 +1,4 @@
-/*eslint-env node */
+
 var FluxComponent = require("flummox/component");
 var TabView = require("./TabView");
 var {DailiesView, TodosView, HabitsView } = require("./Tabs");

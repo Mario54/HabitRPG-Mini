@@ -5,10 +5,17 @@
         "jsx": true,
         "modules": true
     },
+    
     "rules": {
         "semi": 2,
         "new-cap": false
     },
+
+    "env": {
+      "browser": true,
+      "node": true
+    },
+
     "parser": "babel-eslint",
     "plugins": [
       "react"
