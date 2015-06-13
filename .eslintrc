@@ -1,0 +1,16 @@
+{
+    "ecmaFeatures": {
+        "blockBindings": true,
+        "forOf": true,
+        "jsx": true,
+        "modules": true
+    },
+    "rules": {
+        "semi": 2,
+        "new-cap": false
+    },
+    "parser": "babel-eslint",
+    "plugins": [
+      "react"
+    ]
+}
