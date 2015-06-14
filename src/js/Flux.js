@@ -1,9 +1,11 @@
 var Flux = require("flummox").Flux;
 
 var TaskStore = require("./TaskStore");
+var FeedbackActions = require("./FeedbackActions");
+var FeedbackStore = require("./FeedbackStore");
 
-function AppFluxFactory(api, initialTasks) {
-    var TaskActions = require("./TaskActions")(api);
+function AppFluxFactory({api}) {
+    var TaskActions = require("./TaskActions")({api});
 
     return class AppFlux extends Flux {
 
@@ -11,7 +13,10 @@ function AppFluxFactory(api, initialTasks) {
             super();
 
             this.createActions("tasks", TaskActions);
-            this.createStore("tasks", TaskStore, this, initialTasks);
+            this.createStore("tasks", TaskStore, this);
+
+            this.createActions("feedbacks", FeedbackActions);
+            this.createStore("feedbacks", FeedbackStore, this);
         }
 
     };

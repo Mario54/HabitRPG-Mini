@@ -1,7 +1,7 @@
 import { Actions } from "flummox";
 var Promise = require("promise");
 
-function TaskActionsFactory(api) {
+function TaskActionsFactory({api}) {
 
     return class TaskActions extends Actions {
         newTask(content) {
