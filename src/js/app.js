@@ -22,7 +22,8 @@ function renderApp(element, api) {
   var flux = new AppFlux();
 
   setTimeout(function() {
-    flux.getActions("feedbacks").showFeedback(uuid.v4(), "error", "hi there", 2000);
+    flux.getActions("feedbacks").showFeedback(uuid.v4(), "error", "hi there", 200000);
+    flux.getActions("feedbacks").showFeedback(uuid.v4(), "success", "yes!", 200000);
   }, 2000);
 
   if (api) {

@@ -169,3 +169,38 @@ label {
 .habit-controls {
     display: inline-block;
 }
+
+ul.feedback-list {
+  margin: 0;
+  padding: 0;
+}
+
+.feedback-list li {
+  list-style-type: none;
+  display: block;
+  padding: 0;
+  margin: 0;
+}
+
+.error-message {
+  background-color: red;
+  color: white;
+  text-align: center;
+}
+
+.success-message {
+  background-color: green;
+  color: white;
+  text-align: center;
+}
+
+.warning-message {
+  background-color: yellow;
+  color: white;
+}
+
+.dismiss-button {
+  float: right;
+  margin-right: 0.75em;
+  cursor: pointer;
+}

@@ -7,6 +7,7 @@ class FeedbackStore extends Store {
 
         const feedbackActions = flux.getActions("feedbacks");
         this.registerAsync(feedbackActions.showFeedback, this.beginShowFeedback, this.endShowFeedback);
+        this.register(feedbackActions.dismissFeedback, this.handleDismissFeedback);
 
         this.state = {
           feedbacks: Immutable.fromJS({})
@@ -24,9 +25,19 @@ class FeedbackStore extends Store {
     }
 
     endShowFeedback({id}) {
-      this.setState({
-        feedbacks: this.state.feedbacks.delete(id)
-      });
+      if (this.state.feedbacks.get(id)) {
+        this.setState({
+          feedbacks: this.state.feedbacks.delete(id)
+        });
+      }
+    }
+
+    handleDismissFeedback(id) {
+      if (this.state.feedbacks.get(id)) {
+        this.setState({
+          feedbacks: this.state.feedbacks.delete(id)
+        });
+      }
     }
 
 }

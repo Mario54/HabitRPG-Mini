@@ -8,6 +8,10 @@ const FeedbackActions = {
         resolve({id});
       }, delay);
     });
+  },
+
+  dismissFeedback(id) {
+    return id;
   }
 };
 
