@@ -1,8 +1,8 @@
 {
   "name": "HabitRPG Mini",
-  "version": "0.1",
+  "version": "0.0.1",
   "manifest_version": 2,
-  "description": "A minimalistic HabitRPG Chrome Extension",
+  "description": "A minimalistic HabitRPG extension",
   "permissions": [
     "storage"
   ],

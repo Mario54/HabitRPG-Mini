@@ -25,7 +25,7 @@ var HabitsView = React.createClass({
         }
 
         if (habits && habits.isEmpty()) {
-            display = <span>There are no habits to display.</span>;
+            display = <div>There are no habits to display.</div>;
         } else {
             display = <ComponentList components={habits} />;
         }
@@ -70,7 +70,7 @@ var DailiesView = React.createClass({
         }
 
         if (dailies && dailies.isEmpty()) {
-            display = <span>There are no dailies to display.</span>;
+            display = <div>There are no dailies to display.</div>;
         } else {
             display = <ComponentList components={dailies} />;
         }
@@ -119,7 +119,7 @@ var TodosView = React.createClass({
         }
 
         if (todos && todos.isEmpty()) {
-            display = <span>There are no to-dos to display.</span>;
+            display = <div>There are no to-dos to display.</div>;
         } else {
             display = <ComponentList components={todos} />;
         }

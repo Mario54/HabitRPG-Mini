@@ -1,15 +1,19 @@
 #HabitRPG Mini
 
+A minimalistic HabitRPG Chrome extension to quickly update your Habits, Dailies and To-Dos.
+
 ##How to use
 
 ##Development
-To install the app locally, in development mode, you need to allow unpack extensions in your version of chrome. This can be achieved by going to More Tools > Extensions and enabling "Developer mode".
+*Dependency: [Node.js](https://nodejs.org/)*
 
-Then, you need to run the command 
+To install the app locally, in development mode, you need enable developer mode in your version of Chrome. This can be achieved by going to More Tools > Extensions and enabling "Developer mode".
+
+Then, from the root of the project, you need to run the command
 
 > npm install
 
-in the command line to install all the development dependencies. After having installed the dependencies, you can build the application by running
+in the terminal to install all the JavaScript development dependencies. After having installed the dependencies, you can build the application by running
 
 > gulp build
 
