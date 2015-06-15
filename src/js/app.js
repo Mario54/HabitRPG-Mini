@@ -1,6 +1,6 @@
 /*global chrome */
 var React = require("react");
-var uuid = require("uuid");
+// var uuid = require("uuid");
 var FluxComponent = require("flummox/component");
 var HabitRPG = require("./Components/HabitRPG")( {React} );
 var FluxFactory = require("./Flux");
@@ -15,10 +15,10 @@ var flux = new AppFlux();
  * Renders the app given the user's id and the API token
  */
 function renderApp(element) {
-  setTimeout(function() {
-    flux.getActions("feedbacks").showFeedback(uuid.v4(), "error", "hi there", 200000);
-    flux.getActions("feedbacks").showFeedback(uuid.v4(), "success", "yes!", 200000);
-  }, 2000);
+  // setTimeout(function() {
+  //   flux.getActions("feedbacks").showFeedback(uuid.v4(), "error", "hi there", 200000);
+  //   flux.getActions("feedbacks").showFeedback(uuid.v4(), "success", "yes!", 200000);
+  // }, 2000);
 
   React.render(<FluxComponent flux={flux}><HabitRPG /></FluxComponent>, element);
 }
