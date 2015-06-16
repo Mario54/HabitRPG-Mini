@@ -2,10 +2,11 @@
 var React = require("react");
 // var uuid = require("uuid");
 var FluxComponent = require("flummox/component");
-var HabitRPG = require("./Components/HabitRPG")( {React} );
 var FluxFactory = require("./Flux");
 var api = require("./API");
 var root = document.getElementById("content");
+var options = require("./options");
+var HabitRPG = require("./Components/HabitRPG")( {React, options } );
 
 // Flux
 var AppFlux = FluxFactory({api});
@@ -14,26 +15,22 @@ var flux = new AppFlux();
 /**
  * Renders the app given the user's id and the API token
  */
-function renderApp(element) {
+function renderApp(element, userOptions) {
   // setTimeout(function() {
   //   flux.getActions("feedbacks").showFeedback(uuid.v4(), "error", "hi there", 200000);
   //   flux.getActions("feedbacks").showFeedback(uuid.v4(), "success", "yes!", 200000);
   // }, 2000);
 
-  React.render(<FluxComponent flux={flux}><HabitRPG /></FluxComponent>, element);
+  React.render(<FluxComponent flux={flux}><HabitRPG options={userOptions} /></FluxComponent>, element);
 }
 
-renderApp(root);
+
 
 if (chrome) {
   // once the user id and token are available, display the app
-  chrome.storage.sync.get({
-    apiId: "",
-    apiToken: ""
-  }, function (items) {
-    api.login(items.apiId, items.apiToken);
+  options.fetch(chrome.storage, function ({id, token, showCompletedTasks }) {
+    api.login(id, token);
     api.loadAllTasks(flux.getActions("tasks").loadAllTasks);
+    renderApp(root, {showCompletedTasks});
   });
 }
-
-// TODO Sync with local storage when a something changes

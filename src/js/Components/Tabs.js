@@ -1,9 +1,7 @@
 
 "use strict";
-// import { List } from "immutable";
 import FluxComponent from "flummox/component";
 var React = require("react");
-// var NewItemForm = require("./NewItemForm")({React});
 var ComponentList = require("./ComponentList")({React});
 var { EditableHabitItem, EditableTodoItem, EditableDailyItem } = require("./Items.js")({React});
 var helpers = require("../helpers");
@@ -48,7 +46,7 @@ var HabitsView = React.createClass({
 var DailiesView = React.createClass({
     getInitialState() {
         return {
-            showCompleted: true
+            showCompleted: this.props.options.showCompletedTasks
         };
     },
 
@@ -94,7 +92,7 @@ var DailiesView = React.createClass({
 var TodosView = React.createClass({
     getInitialState() {
         return {
-            showCompleted: true
+            showCompleted: this.props.options.showCompletedTasks
         };
     },
 

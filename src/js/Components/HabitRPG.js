@@ -1,4 +1,3 @@
-
 var FluxComponent = require("flummox/component");
 var TabView = require("./TabView");
 var {DailiesView, TodosView, HabitsView } = require("./Tabs");
@@ -25,7 +24,7 @@ function HabitRPGFactory( { React } ) {
                                    stateGetter={([taskStore]) => ({
                                        tasks: taskStore.getTodaysTasks({includeCompletedTodos})
                                    })}>
-                        <TabView tabs={tabs} />
+                        <TabView options={this.props.options} tabs={tabs} />
                     </FluxComponent>
                 </div>
             );
