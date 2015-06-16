@@ -4,14 +4,6 @@ var Promise = require("promise");
 function TaskActionsFactory({api}) {
 
     return class TaskActions extends Actions {
-        // newTask(content) {
-        //     return content;
-        // }
-
-        // saveTask(task) {
-        //     return task;
-        // }
-
         /**
          * Updates the score of a task with the specified direction.
          * Returns a promise from a http get request.

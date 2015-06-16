@@ -2,6 +2,7 @@ import { Store } from "flummox";
 import Immutable from "immutable";
 import assign from "object-assign";
 import uuid from "uuid";
+var helpers = require("./helpers");
 
 function getDayString(day) {
     var days = {
@@ -55,7 +56,7 @@ class TaskStore extends Store {
             return Immutable.List();
         }
 
-        return this.state.tasks.filter((task) => {
+        var tasks = this.state.tasks.filter((task) => {
             if ( !task.get ) {
                 return false;
             }
@@ -64,25 +65,20 @@ class TaskStore extends Store {
 
             if (type === "daily") {
                 var currentDay = getDayString((new Date()).getDay());
-                if (task.get("repeat").get(currentDay)) {
-                    return true;
-                }
 
-                return false;
+                return task.get("repeat").get(currentDay);
             } else if (type === "todo") {
                 if (includeCompletedTodos) {
                     return true;
                 }
 
-                if ( !task.get("completed") ) {
-                    return true;
-                }
-
-                return false;
+                return !task.get("completed");
             }
 
             return true;
         });
+
+        return tasks.sort(helpers.orderTasks);
     }
 
     /**

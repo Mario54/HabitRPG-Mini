@@ -19,7 +19,7 @@ function EditItemFactory({React}) {
 
         render() {
             var Component = this.props.component;
-            return <Component editTo={this.editTo} finishEdit={this.finishEdit} item={this.state.editedItem} />
+            return <Component editTo={this.editTo} finishEdit={this.finishEdit} item={this.state.editedItem} />;
         }
     });
 

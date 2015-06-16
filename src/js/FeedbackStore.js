@@ -25,14 +25,14 @@ class FeedbackStore extends Store {
     }
 
     endShowFeedback({id}) {
-      if (this.state.feedbacks.get(id)) {
-        this.setState({
-          feedbacks: this.state.feedbacks.delete(id)
-        });
-      }
+        this.removeFeedback(id);
     }
 
     handleDismissFeedback(id) {
+        this.removeFeedback(id);
+    }
+
+    removeFeedback(id) {
       if (this.state.feedbacks.get(id)) {
         this.setState({
           feedbacks: this.state.feedbacks.delete(id)

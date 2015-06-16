@@ -18,7 +18,6 @@ var HabitsView = React.createClass({
         if (this.props.todos) {
             habits = this.props.todos
                 .filter(helpers.isHabit)
-                .sort(helpers.orderTasks)
                 .map(function (item) {
                     return <FluxComponent flux={this.props.flux}><EditableHabitItem item={item} /></FluxComponent>;
                 }.bind(this));
@@ -63,7 +62,6 @@ var DailiesView = React.createClass({
             dailies = this.props.todos
                 .filter(helpers.isDaily)
                 .filter(filterCompleted)
-                .sort(helpers.orderTasks)
                 .map(function (item) {
                     return <FluxComponent flux={this.props.flux}><EditableDailyItem item={item} /></FluxComponent>;
                 }.bind(this));
@@ -110,7 +108,6 @@ var TodosView = React.createClass({
             todos = this.props.todos
                 .filter(filterCompleted)
                 .filter(helpers.isTodo)
-                .sort(helpers.orderTasks)
                 .map(function (item) {
                     return <FluxComponent flux={this.props.flux}>
                                <EditableTodoItem item={item} />
@@ -150,5 +147,5 @@ var TodosView = React.createClass({
 module.exports = {
     TodosView,
     DailiesView,
-    HabitsView,
+    HabitsView
 };
