@@ -1,38 +1,39 @@
 var Habitapi = require("habitrpg-api");
 
-// TODO make this a flux store
-var api;
+function createAPI() {
+  var user;
 
-function loadAllTasks(cb) {
-  if (!api) {
-    return;
-  }
+  return {
+    isLoggedIn() {
+      return user !== undefined;
+    },
 
-  api.getTasks(function(error, response) {
-      if (error) {
-          // TODO Display error message
-          return;
+    login(userId, token) {
+      if (userId !== "" && token !== "") {
+        user = new Habitapi(userId, token);
+      }
+    },
+
+    updateTaskScore(id, direction, cb) {
+      user.updateTaskScore(id, direction, cb);
+    },
+
+    loadAllTasks(cb) {
+      if (!user) {
+        return;
       }
 
-      var tasks = JSON.parse(response.text);
-      cb(tasks);
-  });
+      user.getTasks(function(error, response) {
+          if (error) {
+              // TODO Display error message
+              return;
+          }
+
+          var tasks = JSON.parse(response.text);
+          cb(tasks);
+      });
+    }
+  };
 }
 
-function updateTaskScore(id, direction, cb) {
-  if (!api) {
-    return;
-  }
-
-  api.updateTaskScore(id, direction, cb);
-}
-
-function login(userId, token) {
-  api = new Habitapi(userId, token);
-}
-
-export default {
-  login,
-  loadAllTasks,
-  updateTaskScore
-};
+export default createAPI;
