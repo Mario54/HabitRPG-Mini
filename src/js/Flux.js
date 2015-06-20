@@ -20,7 +20,6 @@ function AppFluxFactory({api}) {
         }
 
     };
-
 }
 
 export default AppFluxFactory;

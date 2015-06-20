@@ -139,8 +139,11 @@ class TaskStore extends Store {
         });
     }
 
-    successUpdateTaskScore() {
-        // console.log(arguments);
+    successUpdateTaskScore(details) {
+        // TODO show feedback message
+        var details = {};
+
+        this.emit("task-updated", details);
     }
 
     failureUpdateTaskScore({task, direction }) {

@@ -11,23 +11,29 @@ var HabitRPG = require("./Components/HabitRPG")( {React, options } );
 var api = apiFactory();
 
 // Flux
-var AppFlux = FluxFactory({api});
-var flux = new AppFlux();
+var flux = new (FluxFactory({api}))();
+
+function subscribeEvents(fluxInstance) {
+  var tasksStore = fluxInstance.getStore("tasks");
+
+  tasksStore.on("error", function(message) {
+    setTimeout(function () {
+      fluxInstance.getActions("feedbacks").showFeedback(uuid.v4(), "error", message, 10000);
+    }, 500);
+  });
+
+  tasksStore.on("task-updated", function (details) {
+    setTimeout(function () {
+      fluxInstance.getActions("feedbacks").showFeedback(uuid.v4(), "success", "Updated", 2000);
+    }, 100);
+  });
+}
 
 /**
  * Renders the app given the user's id and the API token
  */
 function renderApp(element, userOptions) {
-  // setTimeout(function() {
-  //   flux.getActions("feedbacks").showFeedback(uuid.v4(), "error", "hi there", 1500);
-  //   flux.getActions("feedbacks").showFeedback(uuid.v4(), "success", "yes!", 1500);
-  // }, 2000);
-
-  flux.getStore("tasks").on("error", function(message) {
-    setTimeout(function () {
-      flux.getActions("feedbacks").showFeedback(uuid.v4(), "error", message, 10000);
-    }, 500);
-  });
+  subscribeEvents(flux);
 
   if ( !api.isLoggedIn() ) {
     flux.getActions("feedbacks").showFeedback(uuid.v4(), "error", "You are not logged in. Enter your user information in the options page.", 500000);
