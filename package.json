@@ -1,6 +1,6 @@
 {
   "name": "HabitRPG-Mini",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "A minimalistic HabitRPG client",
   "main": "gulpfile.js",
   "scripts": {
