@@ -48,7 +48,7 @@ var TabView = React.createClass({
         return (<div>
             <TabGroup tabs={this.props.tabs} current={currentTab} switchTab={this.switchTab} />
 
-            <div>
+            <div id="tabView">
                 {TabViewElement}
             </div>
         </div>);

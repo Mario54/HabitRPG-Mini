@@ -1,3 +1,7 @@
+body {
+  max-height: 20em;
+}
+
 .error-display {
     color: white;
     background-color: red;
@@ -7,7 +11,15 @@
 
 #content {
 	width: 40em;
+  margin-top: 1em;
 }
+
+#tabView {
+	width: 40em;
+  overflow: auto;
+  max-height: 20em;
+}
+
 
 /* Base for label styling */
 [type="checkbox"]:not(:checked),
@@ -168,12 +180,28 @@ label {
     display: inline-block;
 }
 
+#overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 0%;
+    width: 100%;
+    background-color: rgba(0,0,0,0.5);
+    z-index: 10;
+}
+
 ul.feedback-list {
   margin: 0;
-  padding: 0;
+padding: 0;
+  display: absolute;
+  top: 0;
+  left: 0;
 }
 
 .feedback-list li {
+  display: absolute;
+  top: 0;
+  left: 0;
   list-style-type: none;
   display: block;
   padding: 0;

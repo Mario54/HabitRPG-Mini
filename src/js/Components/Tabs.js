@@ -73,11 +73,10 @@ var DailiesView = React.createClass({
 
         return (
             <div>
-                {display}
-
-                <button onClick={this.toggleShowCompleted}>
-                    {this.state.showCompleted ? "Hide" : "Show"} Completed
-                </button>
+              {display}
+              <button onClick={this.toggleShowCompleted}>
+                  {this.state.showCompleted ? "Hide" : "Show"} Completed
+              </button>
             </div>
         );
     },

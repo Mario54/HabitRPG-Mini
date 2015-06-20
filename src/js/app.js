@@ -7,6 +7,7 @@ var apiFactory = require("./API");
 var root = document.getElementById("content");
 var options = require("./options");
 var HabitRPG = require("./Components/HabitRPG")( {React, options } );
+var FeedbackArea = require("./Components/FeedbackView");
 
 var api = apiFactory();
 
@@ -24,7 +25,7 @@ function subscribeEvents(fluxInstance) {
 
   tasksStore.on("task-updated", function (details) {
     setTimeout(function () {
-      fluxInstance.getActions("feedbacks").showFeedback(uuid.v4(), "success", "Updated", 2000);
+      fluxInstance.getActions("feedbacks").showFeedback(uuid.v4(), "success", "Updated", 200000);
     }, 100);
   });
 }
@@ -39,6 +40,7 @@ function renderApp(element, userOptions) {
     flux.getActions("feedbacks").showFeedback(uuid.v4(), "error", "You are not logged in. Enter your user information in the options page.", 500000);
   }
 
+  React.render(<FluxComponent flux={flux} connectToStores={["feedbacks"]}><FeedbackArea /></FluxComponent>, document.getElementById("overlay"));
   React.render(<FluxComponent flux={flux}><HabitRPG options={userOptions} /></FluxComponent>, element);
 }
 
