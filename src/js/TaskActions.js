@@ -16,6 +16,8 @@ function TaskActionsFactory({api}) {
                   message.task = task;
                   message.direction = direction;
 
+                  // reject({task, direction});
+
                   if (error) { reject(error); }
                   else { resolve(message); }
               });

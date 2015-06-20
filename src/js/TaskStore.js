@@ -143,6 +143,16 @@ class TaskStore extends Store {
         // console.log(arguments);
     }
 
+    failureUpdateTaskScore({task, direction }) {
+      this.emit("error", "Could not update the task score");
+      var id = task.get("id").toString();
+      var updatedTask = this.state.tasks.get(id).set("completed", (direction === "up") ? false : true);
+
+      this.setState({
+        tasks: this.state.tasks.set(id, updatedTask)
+      });
+    }
+
 }
 
 export default TaskStore;

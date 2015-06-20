@@ -19,9 +19,15 @@ var flux = new AppFlux();
  */
 function renderApp(element, userOptions) {
   // setTimeout(function() {
-  //   flux.getActions("feedbacks").showFeedback(uuid.v4(), "error", "hi there", 200000);
-  //   flux.getActions("feedbacks").showFeedback(uuid.v4(), "success", "yes!", 200000);
+  //   flux.getActions("feedbacks").showFeedback(uuid.v4(), "error", "hi there", 1500);
+  //   flux.getActions("feedbacks").showFeedback(uuid.v4(), "success", "yes!", 1500);
   // }, 2000);
+
+  flux.getStore("tasks").on("error", function(message) {
+    setTimeout(function () {
+      flux.getActions("feedbacks").showFeedback(uuid.v4(), "error", message, 10000);
+    }, 500);
+  });
 
   if ( !api.isLoggedIn() ) {
     flux.getActions("feedbacks").showFeedback(uuid.v4(), "error", "You are not logged in. Enter your user information in the options page.", 500000);
