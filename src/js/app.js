@@ -25,7 +25,7 @@ function subscribeEvents(fluxInstance) {
 
   tasksStore.on("task-updated", function () {
     setTimeout(function () {
-      fluxInstance.getActions("feedbacks").showFeedback(uuid.v4(), "success", "Updated", 200000);
+      fluxInstance.getActions("feedbacks").showFeedback(uuid.v4(), "success", "Updated", 2000);
     }, 100);
   });
 }
