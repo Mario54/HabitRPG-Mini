@@ -1,6 +1,7 @@
 var FluxComponent = require("flummox/component");
 var TabView = require("./TabView");
 var {DailiesView, TodosView, HabitsView } = require("./Tabs");
+var CharacterInfo = require("./CharacterInfo");
 
 var tabs = [
     { title: "Habits", component: HabitsView },
@@ -16,6 +17,13 @@ function HabitRPGFactory( { React } ) {
         render: function() {
             return (
                 <div>
+
+                    <FluxComponent connectToStores={["user"]}
+                                   stateGetter={([userStore]) => ({
+                                     user: userStore.getUserInfo()
+                                   })}>
+                      <CharacterInfo />
+                    </FluxComponent>
                     <FluxComponent connectToStores={["tasks"]}
                                    stateGetter={([taskStore]) => ({
                                        tasks: taskStore.getTodaysTasks({includeCompletedTodos})

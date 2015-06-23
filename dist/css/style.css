@@ -230,3 +230,19 @@ padding: 0;
   margin-right: 0.75em;
   cursor: pointer;
 }
+
+ul.user-info-list {
+  list-style-type: none;
+  margin-left: 0;
+  padding: 0;
+}
+
+ul.user-info-list li {
+  margin-left: 0;
+  display: inline;
+  padding: 0.5em;
+  margin: 0.3em;
+  background: #337AB7;
+  color: white;
+  border-radius: 0.3em;
+}

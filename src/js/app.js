@@ -23,7 +23,7 @@ function subscribeEvents(fluxInstance) {
     }, 500);
   });
 
-  tasksStore.on("task-updated", function (details) {
+  tasksStore.on("task-updated", function () {
     setTimeout(function () {
       fluxInstance.getActions("feedbacks").showFeedback(uuid.v4(), "success", "Updated", 200000);
     }, 100);
@@ -51,6 +51,7 @@ if (chrome) {
   options.fetch(chrome.storage, function ({id, token, showCompletedTasks }) {
     api.login(id, token);
     api.loadAllTasks(flux.getActions("tasks").loadAllTasks);
+    api.loadUserInfo(flux.getActions("user").loadUserInfo);
     renderApp(root, {showCompletedTasks});
   });
 }
