@@ -17,6 +17,10 @@ function filterCompleted (showCompleted) {
 }
 
 function orderTasks(task1, task2) {
+    if (task1.get("type") === "habit") {
+      return task1.get("text").localeCompare(task2.get("text"));
+    }
+
     if ( !task1.get("completed") && task2.get("completed")) {
         return -1;
     } else if (task1.get("completed") && !task2.get("completed")) {
