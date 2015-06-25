@@ -7,7 +7,6 @@ function round(num) {
 var CharacterInfo = React.createClass({
   render() {
     var user = this.props.user;
-    console.log(user && user.toJS());
     var hp = "",
         mp = "",
         experience = "",
@@ -17,11 +16,11 @@ var CharacterInfo = React.createClass({
     console.log(user);
 
     if (user) {
-      hp = <li>HP: {round(user.get("hp"))}/{user.get("maxHealth")}</li>;
-      mp = <li>MP: {round(user.get("mp"))}/{user.get("maxMP")}</li>;
-      experience = <li>XP: {user.get("exp")}/{user.get("toNextLevel")}</li>;
-      level = <li>Level: {user.get("lvl")}</li>;
-      userDisplay = user.get("name");
+      hp = <li>HP: {round(user["hp"])}/{user["maxHealth"]}</li>;
+      mp = <li>MP: {round(user["mp"])}/{user["maxMP"]}</li>;
+      experience = <li>XP: {user["exp"]}/{user["toNextLevel"]}</li>;
+      level = <li>Level: {user.lvl}</li>;
+      userDisplay = user["name"];
     }
 
     return <div>

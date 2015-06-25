@@ -2,6 +2,9 @@ var FluxComponent = require("flummox/component");
 var TabView = require("./TabView");
 var {DailiesView, TodosView, HabitsView } = require("./Tabs");
 var CharacterInfo = require("./CharacterInfo");
+import { Connector } from "redux/react";
+import * as Actions from "../actions";
+import { bindActionCreators } from "redux";
 
 var tabs = [
     { title: "Habits", component: HabitsView },
@@ -11,19 +14,25 @@ var tabs = [
 
 var includeCompletedTodos = true;
 
+function select(state) {
+  return { user: state.user };
+}
+
 function HabitRPGFactory( { React } ) {
 
     var HabitRPG = React.createClass({
         render: function() {
             return (
                 <div>
-
-                    <FluxComponent connectToStores={["user"]}
-                                   stateGetter={([userStore]) => ({
-                                     user: userStore.getUserInfo()
-                                   })}>
-                      <CharacterInfo />
-                    </FluxComponent>
+                  <Connector>
+                    {(options) => {
+                      var dispatch = options.dispatch;
+                      console.log(options);
+                      /* Yes this is child as a function. */
+                      return <CharacterInfo user={options.store.user}
+                               {...bindActionCreators(Actions, dispatch)} />;
+                     }}
+                  </Connector>
                     <FluxComponent connectToStores={["tasks"]}
                                    stateGetter={([taskStore]) => ({
                                        tasks: taskStore.getTodaysTasks({includeCompletedTodos})

@@ -8,6 +8,17 @@ var root = document.getElementById("content");
 var options = require("./options");
 var HabitRPG = require("./Components/HabitRPG")( {React, options } );
 var FeedbackArea = require("./Components/FeedbackView");
+import * as actions from "./actions";
+
+import { createRedux } from "redux";
+import { Provider } from "redux/react";
+import store from "./stores/store";
+var stores = {
+  store
+};
+
+const redux = createRedux(stores);
+
 
 var api = apiFactory();
 
@@ -43,7 +54,13 @@ function renderApp(element, userOptions) {
   }
 
   React.render(<FluxComponent flux={flux} connectToStores={["feedbacks"]}><FeedbackArea /></FluxComponent>, document.getElementById("overlay"));
-  React.render(<FluxComponent flux={flux}><HabitRPG options={userOptions} /></FluxComponent>, element);
+  React.render(<FluxComponent flux={flux}>
+    <Provider redux={redux}>
+        {() =>
+          <HabitRPG options={userOptions} />
+        }
+    </Provider>
+  </FluxComponent>, element);
 }
 
 
@@ -53,7 +70,8 @@ if (chrome) {
   options.fetch(chrome.storage, function ({id, token, showCompletedTasks }) {
     api.login(id, token);
     api.loadAllTasks(flux.getActions("tasks").loadAllTasks);
-    api.loadUserInfo(flux.getActions("user").loadUserInfo);
+    // api.loadUserInfo(flux.getActions("user").loadUserInfo);
+    redux.dispatch(actions.fetchUser({id, token}));
     renderApp(root, {showCompletedTasks});
   });
 }
