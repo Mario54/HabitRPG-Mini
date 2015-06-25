@@ -141,7 +141,7 @@ class TaskStore extends Store {
 
     successUpdateTaskScore(details) {
         // TODO show feedback message
-        var details = {};
+        details = details || {};
 
         this.emit("task-updated", details);
     }
