@@ -27,6 +27,8 @@ function subscribeEvents(fluxInstance) {
     setTimeout(function () {
       fluxInstance.getActions("feedbacks").showFeedback(uuid.v4(), "success", "Updated", 2000);
     }, 100);
+
+    api.loadUserInfo(flux.getActions("user").loadUserInfo);
   });
 }
 
