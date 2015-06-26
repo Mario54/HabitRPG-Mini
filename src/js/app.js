@@ -5,9 +5,11 @@ var options = require("./options");
 var HabitRPG = require("./Components/HabitRPG")( {React, options } );
 var FeedbackArea = require("./Components/FeedbackView");
 import * as actions from "./actions";
+import { bindActionCreators } from "redux";
+import * as Actions from "./actions";
 
 import { createRedux } from "redux";
-import { Provider } from "redux/react";
+import { Provider, Connector } from "redux/react";
 import habitrpg from "./stores/habitrpg";
 var stores = {
   habitrpg
@@ -15,11 +17,27 @@ var stores = {
 
 const redux = createRedux(stores);
 
+function selectFeedbacks(state) {
+  return {feedbacks: state.habitrpg.feedbacks};
+}
 /**
  * Renders the app given the user's id and the API token
  */
 function renderApp(element, userOptions) {
-  // React.render(<FluxComponent flux={flux} connectToStores={["feedbacks"]}><FeedbackArea /></FluxComponent>, document.getElementById("overlay"));
+  redux.dispatch(actions.showFeedback({
+    delay: 2000,
+    type: "success",
+    message: "hi"
+  }));
+
+  React.render(<Provider redux={redux}>
+    {() => <Connector select={selectFeedbacks}>
+      {({ feedbacks, dispatch }) =>
+        <FeedbackArea feedbacks={feedbacks} {...bindActionCreators(Actions, dispatch)} />
+      }
+    </Connector>}
+  </Provider>, document.getElementById("overlay"));
+
   React.render(
     <Provider redux={redux}>
         {() =>
@@ -28,10 +46,11 @@ function renderApp(element, userOptions) {
     </Provider>, element);
 }
 
+renderApp(root);
+
 if (chrome) {
   // once the user id and token are available, display the app
   options.fetch(chrome.storage, function ({id, token, showCompletedTasks }) {
     redux.dispatch(actions.fetchUser({id, token}));
-    renderApp(root, {showCompletedTasks});
   });
 }

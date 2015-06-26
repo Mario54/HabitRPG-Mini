@@ -1,6 +1,7 @@
 import * as constants from "./constants";
 var api = require("habitrpg-api");
 var Immutable = require("immutable");
+import uuid from "uuid";
 
 var user;
 
@@ -67,11 +68,37 @@ export function updateTaskScore(task, direction) {
 
     promise.then(function (message) {
       return message;
-    }, function (error) {
+    }, function () {
       dispatch({
         type: constants.UPDATE_TASK_SCORE_ERROR,
         task,
         direction
+      });
+    });
+  };
+}
+
+export function showFeedback({ delay, message, type}) {
+  return dispatch => {
+    var id = uuid.v4();
+
+    var promise = new Promise(function (resolve) {
+      setTimeout(function() {
+        resolve();
+      }, delay);
+    });
+
+    dispatch({
+      type: constants.SHOW_FEEDBACK,
+      feedbackType: type,
+      id,
+      message
+    });
+
+    promise.then(function() {
+      dispatch({
+        type: constants.REMOVE_FEEDBACK,
+        id
       });
     });
   };

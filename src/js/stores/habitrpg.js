@@ -4,7 +4,8 @@ var Immutable = require("immutable");
 
 const initialState = {
   user: {},
-  tasks: Immutable.fromJS({})
+  tasks: Immutable.fromJS({}),
+  feedbacks: Immutable.fromJS({})
 };
 
 const actionsMap = {
@@ -16,7 +17,21 @@ const actionsMap = {
 
     return {tasks: state.tasks.set(id, updatedTask)};
   },
-  [constants.UPDATE_TASK_SCORE_ERROR]: (state, action) => ({user: action.user, tasks: action.tasks})
+  [constants.UPDATE_TASK_SCORE_ERROR]: (state, action) => ({user: action.user, tasks: action.tasks}),
+  [constants.SHOW_FEEDBACK]: (state, action) => {
+    return {
+      feedbacks: state.feedbacks.set(action.id, Immutable.fromJS({
+        id: action.id,
+        type: action.feedbackType,
+        message: action.message
+      }))
+    };
+  },
+  [constants.REMOVE_FEEDBACK]: (state, action) => {
+    return {
+      feedbacks: state.feedbacks.delete(action.id)
+    };
+  }
 };
 
 export default function habitrpg(state = initialState, action) {
