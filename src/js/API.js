@@ -40,12 +40,7 @@ function createAPI() {
         var info = responseJS.stats;
 
         info.name = responseJS.profile.name;
-
-
-        console.log(info);
         cb(info);
-        // console.log(JSON.parse(response.text));
-        // cb(JSON.parse(response.text).stats);
       });
     }
   };
