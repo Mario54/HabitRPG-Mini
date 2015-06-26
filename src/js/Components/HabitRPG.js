@@ -1,10 +1,10 @@
-var FluxComponent = require("flummox/component");
 var TabView = require("./TabView");
 var {DailiesView, TodosView, HabitsView } = require("./Tabs");
 var CharacterInfo = require("./CharacterInfo");
 import { Connector } from "redux/react";
 import * as Actions from "../actions";
 import { bindActionCreators } from "redux";
+import helpers from "../helpers";
 
 var tabs = [
     { title: "Habits", component: HabitsView },
@@ -23,11 +23,9 @@ function selectUser(state) {
 function selectUserAndTasks(state) {
   return {
     user: state.habitrpg.user,
-    tasks: state.habitrpg.tasks
+    tasks: helpers.getTodaysTasks(state.habitrpg.tasks)
   };
 }
-
-
 
 function HabitRPGFactory( { React } ) {
 
@@ -56,6 +54,5 @@ function HabitRPGFactory( { React } ) {
 
     return HabitRPG;
 }
-
 
 export default HabitRPGFactory;

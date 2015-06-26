@@ -18,7 +18,7 @@ var TabGroup = React.createClass({
     render: function() {
         var tabs = this.props.tabs.map( (tab, i) => {
             return <Tab key={i} active={this.props.current === i} tab={tab} switchTab={this.props.switchTab(i)} />;
-        }.bind(this));
+        });
 
         return (
             <ul id="myTab" className="nav nav-tabs" role="tablist">
@@ -40,8 +40,6 @@ var TabView = React.createClass({
         var currentTab = this.state.currentTab;
 
         var ActiveTab = this.props.tabs[this.state.currentTab].component;
-
-        // var TabViewElement = React.createElement(, ...this.props);
         var TabViewElement = <ActiveTab {...this.props} />;
 
         return (<div>

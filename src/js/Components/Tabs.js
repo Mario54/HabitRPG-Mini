@@ -1,6 +1,3 @@
-
-"use strict";
-import FluxComponent from "flummox/component";
 var React = require("react");
 var ComponentList = require("./ComponentList")({React});
 var { EditableHabitItem, EditableTodoItem, EditableDailyItem } = require("./Items.js")({React});
@@ -32,20 +29,13 @@ var HabitsView = React.createClass({
                 {display}
             </div>
         );
-    },
-
-    addNewHabit(text) {
-        this.props.flux.getActions("tasks").newTask({
-            text,
-            type: "habit"
-        });
     }
 });
 
 var DailiesView = React.createClass({
     getInitialState() {
         return {
-            showCompleted: this.props.options.showCompletedTasks
+            showCompleted: this.props.options && this.props.options.showCompletedTasks
         };
     },
 
@@ -90,7 +80,7 @@ var DailiesView = React.createClass({
 var TodosView = React.createClass({
     getInitialState() {
         return {
-            showCompleted: this.props.options.showCompletedTasks
+            showCompleted: this.props.options && this.props.options.showCompletedTasks
         };
     },
 
@@ -131,10 +121,6 @@ var TodosView = React.createClass({
         var showCompleted = !this.state.showCompleted;
 
         this.setState({ showCompleted });
-    },
-
-    newTodoItem(text) {
-        this.props.flux.getActions("tasks").newTask(text);
     }
 });
 

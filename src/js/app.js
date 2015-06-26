@@ -24,12 +24,6 @@ function selectFeedbacks(state) {
  * Renders the app given the user's id and the API token
  */
 function renderApp(element, userOptions) {
-  redux.dispatch(actions.showFeedback({
-    delay: 2000,
-    type: "success",
-    message: "hi"
-  }));
-
   React.render(<Provider redux={redux}>
     {() => <Connector select={selectFeedbacks}>
       {({ feedbacks, dispatch }) =>
