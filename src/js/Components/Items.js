@@ -6,10 +6,6 @@ function ItemsFactory({React}) {
 
     var EditableDailyItem = React.createClass({
         render() {
-            /*var item = <EditItem editComponent={TextEdit}
-                                 displayComponent={EditableTaskTextComponent}
-                                 editAction={this.saveItem}
-                                 item={this.props.item} />;*/
             var item = <label onClick={this.toggleComplete}>{this.props.item.get("text")}</label>;
 
             return (<div>
@@ -22,21 +18,12 @@ function ItemsFactory({React}) {
             var completed = !this.props.item.get("completed");
             var item = this.props.item.set("completed", completed);
 
-            this.props.flux.getActions("tasks").updateTaskScore(item, completed ? "up" : "down");
-        },
-
-        saveItem(item) {
-            this.props.flux.getActions("tasks").saveTask(item);
+            this.props.updateTaskScore(item, completed ? "up" : "down");
         }
     });
 
     var EditableTodoItem = React.createClass({
         render() {
-            /*var item = <EditItem editComponent={TextEdit}
-                                 displayComponent={EditableTaskTextComponent}
-                                 editAction={this.saveItem}
-                                 item={this.props.item} />;*/
-
             var item = <label onClick={this.toggleComplete}>{this.props.item.get("text")}</label>;
 
             return (<div>
@@ -49,11 +36,7 @@ function ItemsFactory({React}) {
             var completed = !this.props.item.get("completed");
             var item = this.props.item.set("completed", completed);
 
-            this.props.flux.getActions("tasks").updateTaskScore(item, completed ? "up" : "down");
-        },
-
-        saveItem(item) {
-            this.props.flux.getActions("tasks").saveTask(item);
+            this.props.updateTaskScore(item, completed ? "up" : "down");
         }
     });
 
@@ -65,11 +48,6 @@ function ItemsFactory({React}) {
                                          upButtonClicked={this.upButtonClicked}
                                          downButtonClicked={this.downButtonClicked} />;
 
-            /*var item = <EditItem editComponent={TextEdit}
-                                 displayComponent={EditableTaskTextComponent}
-                                 editAction={this.saveItem}
-                                 item={this.props.item} />;*/
-
             var item = <label>{this.props.item.get("text")}</label>;
 
             return (<div className="habit-wrap">
@@ -78,16 +56,12 @@ function ItemsFactory({React}) {
                     </div>);
         },
 
-        saveItem(item) {
-            this.props.flux.getActions("tasks").saveTask(item);
-        },
-
         upButtonClicked() {
-            this.props.flux.getActions("tasks").updateTaskScore(this.props.item, "up");
+            this.props.updateTaskScore(this.props.item, "up");
         },
 
         downButtonClicked() {
-            this.props.flux.getActions("tasks").updateTaskScore(this.props.item, "down");
+            this.props.updateTaskScore(this.props.item, "down");
         }
     });
 

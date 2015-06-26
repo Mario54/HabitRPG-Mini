@@ -39,11 +39,10 @@ var TabView = React.createClass({
     render: function() {
         var currentTab = this.state.currentTab;
 
-        var TabViewElement = React.createElement(this.props.tabs[this.state.currentTab].component, {
-            todos: this.props.tasks && this.props.tasks.toList(),
-            flux: this.props.flux,
-            options: this.props.options
-        });
+        var ActiveTab = this.props.tabs[this.state.currentTab].component;
+
+        // var TabViewElement = React.createElement(, ...this.props);
+        var TabViewElement = <ActiveTab {...this.props} />;
 
         return (<div>
             <TabGroup tabs={this.props.tabs} current={currentTab} switchTab={this.switchTab} />

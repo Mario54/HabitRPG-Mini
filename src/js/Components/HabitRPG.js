@@ -14,9 +14,20 @@ var tabs = [
 
 var includeCompletedTodos = true;
 
-function select(state) {
-  return { user: state.user };
+function selectUser(state) {
+  return {
+    user: state.habitrpg.user
+  };
 }
+
+function selectUserAndTasks(state) {
+  return {
+    user: state.habitrpg.user,
+    tasks: state.habitrpg.tasks
+  };
+}
+
+
 
 function HabitRPGFactory( { React } ) {
 
@@ -24,21 +35,20 @@ function HabitRPGFactory( { React } ) {
         render: function() {
             return (
                 <div>
-                  <Connector>
-                    {(options) => {
-                      var dispatch = options.dispatch;
-                      console.log(options);
+                  <Connector select={selectUser}>
+                    {({ user, dispatch }) =>
                       /* Yes this is child as a function. */
-                      return <CharacterInfo user={options.store.user}
-                               {...bindActionCreators(Actions, dispatch)} />;
-                     }}
+                      <CharacterInfo user={user}
+                               {...bindActionCreators(Actions, dispatch)} />
+                    }
                   </Connector>
-                    <FluxComponent connectToStores={["tasks"]}
-                                   stateGetter={([taskStore]) => ({
-                                       tasks: taskStore.getTodaysTasks({includeCompletedTodos})
-                                   })}>
-                        <TabView options={this.props.options} tabs={tabs} />
-                    </FluxComponent>
+                  <Connector select={selectUserAndTasks}>
+                    {({ user, tasks, dispatch }) =>
+                      /* Yes this is child as a function. */
+                      <TabView options={this.props.options} user={user} tasks={tasks} tabs={tabs}
+                               {...bindActionCreators(Actions, dispatch)} />
+                    }
+                  </Connector>
                 </div>
             );
         }

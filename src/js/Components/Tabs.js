@@ -13,12 +13,12 @@ var HabitsView = React.createClass({
         var habits,
             display;
 
-        if (this.props.todos) {
-            habits = this.props.todos
+        if (this.props.tasks) {
+            habits = this.props.tasks
                 .filter(helpers.isHabit)
-                .map(function (item) {
-                    return <FluxComponent flux={this.props.flux}><EditableHabitItem item={item} /></FluxComponent>;
-                }.bind(this));
+                .map(item => {
+                    return <EditableHabitItem item={item} updateTaskScore={this.props.updateTaskScore} />;
+                });
         }
 
         if (habits && habits.isEmpty()) {
@@ -26,7 +26,6 @@ var HabitsView = React.createClass({
         } else {
             display = <ComponentList components={habits} />;
         }
-
 
         return (
             <div>
@@ -56,13 +55,13 @@ var DailiesView = React.createClass({
 
         var filterCompleted = helpers.filterCompleted(this.state.showCompleted);
 
-        if (this.props.todos) {
-            dailies = this.props.todos
+        if (this.props.tasks) {
+            dailies = this.props.tasks
                 .filter(helpers.isDaily)
                 .filter(filterCompleted)
-                .map(function (item) {
-                    return <FluxComponent flux={this.props.flux}><EditableDailyItem item={item} /></FluxComponent>;
-                }.bind(this));
+                .map(item => {
+                    return <EditableDailyItem item={item} updateTaskScore={this.props.updateTaskScore} />;
+              });
         }
 
         if (dailies && dailies.isEmpty()) {
@@ -101,15 +100,13 @@ var TodosView = React.createClass({
 
         var filterCompleted = helpers.filterCompleted(this.state.showCompleted);
 
-        if (this.props.todos) {
-            todos = this.props.todos
+        if (this.props.tasks) {
+            todos = this.props.tasks
                 .filter(filterCompleted)
                 .filter(helpers.isTodo)
-                .map(function (item) {
-                    return <FluxComponent flux={this.props.flux}>
-                               <EditableTodoItem item={item} />
-                           </FluxComponent>;
-                }.bind(this));
+                .map(item => {
+                    return <EditableTodoItem item={item} updateTaskScore={this.props.updateTaskScore} />;
+                });
         }
 
         if (todos && todos.isEmpty()) {
