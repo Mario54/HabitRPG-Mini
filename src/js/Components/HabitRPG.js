@@ -2,7 +2,7 @@ var TabView = require("./TabView");
 var { DailiesView, TodosView, HabitsView } = require("./Tabs");
 var CharacterInfo = require("./CharacterInfo");
 import { connect } from "react-redux";
-import * as Actions from "../actions";
+var actions = require("../actions");
 import helpers from "../helpers";
 import React from "react";
 
@@ -21,14 +21,21 @@ function selectUserAndTasks(state) {
   };
 }
 
-
+console.log(actions);
 var HabitRPG = React.createClass({
     render: function() {
+        console.log(actions);
         const { dispatch, user, tasks } = this.props;
+
+        function updateTaskScore(task, direction) {
+            console.log(actions);
+            dispatch(actions.updateTaskScore(task, direction));
+        }
+
         return (
             <div>
               <CharacterInfo user={user} />
-              <TabView options={this.props.options} user={user} tasks={tasks} tabs={tabs} />
+              <TabView updateTaskScore={updateTaskScore} options={this.props.options} user={user} tasks={tasks} tabs={tabs} />
             </div>
         );
     }
