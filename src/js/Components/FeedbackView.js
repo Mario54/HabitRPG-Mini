@@ -1,5 +1,6 @@
 var React = require("react");
 var { FeedbackView } = require("./FeedbackItems");
+import { connect } from "react-redux";
 
 var FeedbackArea = React.createClass({
   render() {
@@ -24,4 +25,10 @@ var FeedbackArea = React.createClass({
   }
 });
 
-export default FeedbackArea;
+function selector(state) {
+    return {
+        feedbacks: state.feedbacks
+    };
+}
+
+export default connect(selector)(FeedbackArea);
