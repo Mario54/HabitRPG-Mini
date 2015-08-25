@@ -12,7 +12,6 @@ var HabitsView = React.createClass({
 
         if (this.props.tasks) {
             habits = this.props.tasks
-                .filter(helpers.isHabit)
                 .map(item => {
                     return <TaskItem item={item} updateTaskScore={this.props.updateTaskScore} />;
                 });
@@ -47,7 +46,6 @@ var DailiesView = React.createClass({
 
         if (this.props.tasks) {
             dailies = this.props.tasks
-                .filter(helpers.isDaily)
                 .filter(filterCompleted)
                 .map(item => {
                     return <TaskItem item={item} updateTaskScore={this.props.updateTaskScore} />;
@@ -93,7 +91,6 @@ var TodosView = React.createClass({
         if (this.props.tasks) {
             todos = this.props.tasks
                 .filter(filterCompleted)
-                .filter(helpers.isTodo)
                 .map(item => {
                     return <TaskItem item={item} updateTaskScore={this.props.updateTaskScore} />;
                 });
@@ -124,8 +121,25 @@ var TodosView = React.createClass({
     }
 });
 
-module.exports = {
-    TodosView,
-    DailiesView,
-    HabitsView
+var taskViewMap = {
+    "habit": HabitsView,
+    "todo": TodosView,
+    "daily": DailiesView
 };
+
+var TaskView = React.createClass({
+    render: function() {
+        let { tasks, taskType } = this.props;
+
+        if (tasks) {
+            tasks = this.props.tasks
+                .filter(helpers.isTaskType(taskType));
+        }
+
+        var TabView = taskViewMap[taskType];
+
+        return <TabView tasks={tasks} />;
+    }
+});
+
+module.exports = TaskView;

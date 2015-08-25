@@ -1,5 +1,4 @@
 var TabView = require("./TabView");
-var { DailiesView, TodosView, HabitsView } = require("./Tabs");
 var CharacterInfo = require("./CharacterInfo");
 import { connect } from "react-redux";
 var actions = require("../actions");
@@ -7,9 +6,9 @@ import helpers from "../helpers";
 import React from "react";
 
 var tabs = [
-    { title: "Habits", component: HabitsView },
-    { title: "Dailies", component: DailiesView },
-    { title: "To-Dos", component: TodosView }
+    { title: "Habits", type: "habit" },
+    { title: "Dailies", type: "daily" },
+    { title: "To-Dos", type: "todo" }
 ];
 
 // var includeCompletedTodos = true;
@@ -21,10 +20,8 @@ function selectUserAndTasks(state) {
   };
 }
 
-console.log(actions);
 var HabitRPG = React.createClass({
     render: function() {
-        console.log(actions);
         const { dispatch, user, tasks } = this.props;
 
         function updateTaskScore(task, direction) {

@@ -93,5 +93,6 @@ export default {
     orderTasks,
     isHabit,
     isDaily,
-    isTodo
+    isTodo,
+    isTaskType
 };

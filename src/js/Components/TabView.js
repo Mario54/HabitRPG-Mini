@@ -1,4 +1,4 @@
-
+var TaskView = require("./Tabs");
 var React = require("react");
 
 var Tab = React.createClass({
@@ -39,8 +39,8 @@ var TabView = React.createClass({
     render: function() {
         var currentTab = this.state.currentTab;
 
-        var ActiveTab = this.props.tabs[this.state.currentTab].component;
-        var TabViewElement = <ActiveTab {...this.props} />;
+        var taskType = this.props.tabs[this.state.currentTab].type;
+        var TabViewElement = <TaskView {...this.props} taskType={taskType} />;
 
         return (<div>
             <TabGroup tabs={this.props.tabs} current={currentTab} switchTab={this.switchTab} />
