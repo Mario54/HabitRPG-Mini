@@ -51,7 +51,7 @@ function orderTasks(task1, task2) {
   * Returns all the tasks that are active today.
   */
 function getTodaysTasks(tasks, options) {
-    var { includeCompletedTodos } = options || {};
+    // var { includeCompletedTodos } = options || {};
 
     if ( !tasks ) {
         return Immutable.List();
@@ -64,6 +64,7 @@ function getTodaysTasks(tasks, options) {
 
         var type = task.get("type");
 
+        // if the daily scheduled for today?
         if (type === "daily") {
             var currentDay = getDayString((new Date()).getDay());
 

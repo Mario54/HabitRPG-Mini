@@ -1,6 +1,6 @@
 var React = require("react");
 var ComponentList = require("./ComponentList")({React});
-var { EditableHabitItem, EditableTodoItem, EditableDailyItem } = require("./Items.js")({React});
+var TaskItem = require("./Items.js")({React});
 var helpers = require("../helpers");
 
 // TODO Refactor to deal with empty lists in one component (too much repetition).
@@ -14,7 +14,7 @@ var HabitsView = React.createClass({
             habits = this.props.tasks
                 .filter(helpers.isHabit)
                 .map(item => {
-                    return <EditableHabitItem item={item} updateTaskScore={this.props.updateTaskScore} />;
+                    return <TaskItem item={item} updateTaskScore={this.props.updateTaskScore} />;
                 });
         }
 
@@ -50,7 +50,7 @@ var DailiesView = React.createClass({
                 .filter(helpers.isDaily)
                 .filter(filterCompleted)
                 .map(item => {
-                    return <EditableDailyItem item={item} updateTaskScore={this.props.updateTaskScore} />;
+                    return <TaskItem item={item} updateTaskScore={this.props.updateTaskScore} />;
               });
         }
 
@@ -95,7 +95,7 @@ var TodosView = React.createClass({
                 .filter(filterCompleted)
                 .filter(helpers.isTodo)
                 .map(item => {
-                    return <EditableTodoItem item={item} updateTaskScore={this.props.updateTaskScore} />;
+                    return <TaskItem item={item} updateTaskScore={this.props.updateTaskScore} />;
                 });
         }
 

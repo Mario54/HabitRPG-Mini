@@ -1,10 +1,23 @@
 
 function ItemsFactory({React}) {
-    // var EditItem = require("./EditItem")({React});
-    // var TextEdit = require("./TextEdit")({React});
     var HabitControls = require("./HabitControls")({React});
 
-    var EditableDailyItem = React.createClass({
+    var TaskItem = React.createClass({
+        render() {
+            var taskType = this.props.item.get("type");
+
+            if (taskType === "daily") {
+                return <DailyItem {...this.props} />;
+            } else if (taskType === "todo") {
+                return <TodoItem {...this.props} />;
+            } else {
+                return <HabitItem {...this.props} />;
+            }
+        }
+
+    });
+
+    var DailyItem = React.createClass({
         render() {
             var item = <label onClick={this.toggleComplete}>{this.props.item.get("text")}</label>;
 
@@ -22,7 +35,7 @@ function ItemsFactory({React}) {
         }
     });
 
-    var EditableTodoItem = React.createClass({
+    var TodoItem = React.createClass({
         render() {
             var item = <label onClick={this.toggleComplete}>{this.props.item.get("text")}</label>;
 
@@ -40,7 +53,7 @@ function ItemsFactory({React}) {
         }
     });
 
-    var EditableHabitItem = React.createClass({
+    var HabitItem = React.createClass({
         render() {
             var habit = this.props.item,
                 buttons = <HabitControls showPlus={habit.get("up")}
@@ -65,23 +78,7 @@ function ItemsFactory({React}) {
         }
     });
 
-    // var EditableTextComponent = React.createClass({
-    //     render() {
-    //         return <span onClick={this.props.onEdit}>{this.props.text}</span>;
-    //     }
-    // });
-
-    // var EditableTaskTextComponent = React.createClass({
-    //     render() {
-    //         return <EditableTextComponent onEdit={this.props.onEdit} text={this.props.item.get("text")} />;
-    //     }
-    // });
-
-    return {
-        EditableHabitItem,
-        EditableTodoItem,
-        EditableDailyItem
-    };
+    return TaskItem;
 }
 
 export default ItemsFactory;
