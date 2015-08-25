@@ -133,3 +133,10 @@ export function dismissFeedback(id) {
     id
   };
 }
+
+export function switchTab(newTabIndex) {
+    return {
+        type: constants.SWITCH_TAB,
+        tabIndex: newTabIndex
+    };
+}

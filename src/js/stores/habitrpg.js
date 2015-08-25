@@ -5,7 +5,8 @@ var Immutable = require("immutable");
 const initialState = {
   user: {},
   tasks: Immutable.fromJS({}),
-  feedbacks: Immutable.fromJS({})
+  feedbacks: Immutable.fromJS({}),
+  currentTab: 0
 };
 
 const actionsMap = {
@@ -31,6 +32,11 @@ const actionsMap = {
     return {
       feedbacks: state.feedbacks.delete(action.id)
     };
+  },
+  [constants.SWITCH_TAB]: (state, action) => {
+      return {
+          currentTab: action.tabIndex
+      };
   }
 };
 

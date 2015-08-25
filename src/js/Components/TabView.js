@@ -29,17 +29,10 @@ var TabGroup = React.createClass({
 });
 
 var TabView = React.createClass({
-
-    getInitialState: function () {
-        return {
-            currentTab: 0
-        };
-    },
-
     render: function() {
-        var currentTab = this.state.currentTab;
+        var currentTab = this.props.currentTab;
 
-        var taskType = this.props.tabs[this.state.currentTab].type;
+        var taskType = this.props.tabs[currentTab].type;
         var TabViewElement = <TaskView {...this.props} taskType={taskType} />;
 
         return (<div>
@@ -52,9 +45,7 @@ var TabView = React.createClass({
     },
 
     switchTab: function (index) {
-        return function () {
-            this.setState({currentTab: index});
-        }.bind(this);
+        return () => this.props.switchTab(index);
     }
 });
 

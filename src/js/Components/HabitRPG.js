@@ -13,30 +13,30 @@ var tabs = [
 
 // var includeCompletedTodos = true;
 
-function selectUserAndTasks(state) {
+function selector(state) {
   return {
     user: state.user,
-    tasks: helpers.getTodaysTasks(state.tasks)
+    tasks: helpers.getTodaysTasks(state.tasks),
+    currentTab: state.currentTab
   };
 }
 
 var HabitRPG = React.createClass({
     render: function() {
-        const { dispatch, user, tasks } = this.props;
+        const { dispatch, user, tasks, currentTab } = this.props;
 
         function updateTaskScore(task, direction) {
-            console.log(actions);
             dispatch(actions.updateTaskScore(task, direction));
         }
 
         return (
             <div>
               <CharacterInfo user={user} />
-              <TabView updateTaskScore={updateTaskScore} options={this.props.options} user={user} tasks={tasks} tabs={tabs} />
+              <TabView currentTab={currentTab} switchTab={(newTab) => dispatch(actions.switchTab(newTab))} updateTaskScore={updateTaskScore} options={this.props.options} user={user} tasks={tasks} tabs={tabs} />
             </div>
         );
     }
 });
 
 // Wrap the component to inject dispatch and state into it
-export default connect(selectUserAndTasks)(HabitRPG);
+export default connect(selector)(HabitRPG);
