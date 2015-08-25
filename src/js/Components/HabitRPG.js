@@ -1,10 +1,10 @@
 var TabView = require("./TabView");
-var {DailiesView, TodosView, HabitsView } = require("./Tabs");
+var { DailiesView, TodosView, HabitsView } = require("./Tabs");
 var CharacterInfo = require("./CharacterInfo");
-import { Connector } from "redux/react";
-import * as Actions from "../actions";
-import { bindActionCreators } from "redux";
+import { connect } from "react-redux";
+var actions = require("../actions");
 import helpers from "../helpers";
+import React from "react";
 
 var tabs = [
     { title: "Habits", component: HabitsView },
@@ -12,47 +12,34 @@ var tabs = [
     { title: "To-Dos", component: TodosView }
 ];
 
-var includeCompletedTodos = true;
-
-function selectUser(state) {
-  return {
-    user: state.habitrpg.user
-  };
-}
+// var includeCompletedTodos = true;
 
 function selectUserAndTasks(state) {
   return {
-    user: state.habitrpg.user,
-    tasks: helpers.getTodaysTasks(state.habitrpg.tasks)
+    user: state.user,
+    tasks: helpers.getTodaysTasks(state.tasks)
   };
 }
 
-function HabitRPGFactory( { React } ) {
+console.log(actions);
+var HabitRPG = React.createClass({
+    render: function() {
+        console.log(actions);
+        const { dispatch, user, tasks } = this.props;
 
-    var HabitRPG = React.createClass({
-        render: function() {
-            return (
-                <div>
-                  <Connector select={selectUser}>
-                    {({ user, dispatch }) =>
-                      /* Yes this is child as a function. */
-                      <CharacterInfo user={user}
-                               {...bindActionCreators(Actions, dispatch)} />
-                    }
-                  </Connector>
-                  <Connector select={selectUserAndTasks}>
-                    {({ user, tasks, dispatch }) =>
-                      /* Yes this is child as a function. */
-                      <TabView options={this.props.options} user={user} tasks={tasks} tabs={tabs}
-                               {...bindActionCreators(Actions, dispatch)} />
-                    }
-                  </Connector>
-                </div>
-            );
+        function updateTaskScore(task, direction) {
+            console.log(actions);
+            dispatch(actions.updateTaskScore(task, direction));
         }
-    });
 
-    return HabitRPG;
-}
+        return (
+            <div>
+              <CharacterInfo user={user} />
+              <TabView updateTaskScore={updateTaskScore} options={this.props.options} user={user} tasks={tasks} tabs={tabs} />
+            </div>
+        );
+    }
+});
 
-export default HabitRPGFactory;
+// Wrap the component to inject dispatch and state into it
+export default connect(selectUserAndTasks)(HabitRPG);

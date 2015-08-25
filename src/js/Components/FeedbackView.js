@@ -1,22 +1,26 @@
 var React = require("react");
 var { FeedbackView } = require("./FeedbackItems");
+import { connect } from "react-redux";
+import actions from "../actions";
 
 var FeedbackArea = React.createClass({
   render() {
+      const { dispatch, feedbacks } = this.props;
+
     var dismissMessage = (id) => {
       return () => {
-        this.props.dismissFeedback(id);
+        dispatch(actions.dismissFeedback(id));
       };
     };
 
-    var views = this.props.feedbacks.map(function (feedback) {
+    var views = feedbacks.map(function (feedback) {
       var dismiss = <span onClick={dismissMessage(feedback.get("id"))}>X</span>;
       return <FeedbackView dimiss={dismiss} feedback={feedback} />;
     });
 
-    return <ul className="feedback-list">
+    return (<ul className="feedback-list">
       {views}
-    </ul>;
+    </ul>);
   },
 
   dismissMessage() {
@@ -24,4 +28,10 @@ var FeedbackArea = React.createClass({
   }
 });
 
-export default FeedbackArea;
+function selector(state) {
+    return {
+        feedbacks: state.feedbacks
+    };
+}
+
+export default connect(selector)(FeedbackArea);
