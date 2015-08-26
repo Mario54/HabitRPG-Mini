@@ -14,11 +14,11 @@ var CharacterInfo = React.createClass({
         userDisplay = "";
 
     if (user) {
-      hp = <li>HP: {round(user.hp)}/{user.maxHealth}</li>;
-      mp = <li>MP: {round(user.mp)}/{user.maxMP}</li>;
-      experience = <li>XP: {user.exp}/{user.toNextLevel}</li>;
-      level = <li>Level: {user.lvl}</li>;
-      userDisplay = user.name;
+      hp = user.hp ? <li>HP: {round(user.hp)}/{user.maxHealth}</li> : "";
+      mp = user.mp ? <li>MP: {round(user.mp)}/{user.maxMP}</li> : "";
+      experience = user.exp ? <li>XP: {user.exp}/{user.toNextLevel}</li> : "";
+      level = user.lvl ? <li>Level: {user.lvl}</li> : "";
+      userDisplay = user.name ? user.name : "";
     }
 
     return <div>
