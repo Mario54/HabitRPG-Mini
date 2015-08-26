@@ -3,6 +3,7 @@ var assign = require("object-assign");
 var Immutable = require("immutable");
 
 const initialState = {
+  isFetchingUser: true,
   user: {},
   tasks: Immutable.fromJS({}),
   feedbacks: Immutable.fromJS({}),
@@ -10,7 +11,14 @@ const initialState = {
 };
 
 const actionsMap = {
-  [constants.FETCH_USER]: (state, action) => ({user: action.user, tasks: action.tasks}),
+  [constants.FETCHING_USER]: () => ({
+      isFetchingUser: true,
+  }),
+  [constants.FETCH_USER]: (state, action) => ({
+      user: action.user,
+      tasks: action.tasks,
+      isFetchingUser: false,
+   }),
   [constants.UPDATE_TASK_SCORE]: (state, action) => {
     var { task, direction } = action;
     var id = task.get("id").toString();

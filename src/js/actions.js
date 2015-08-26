@@ -46,6 +46,10 @@ export function fetchUser(options) {
       return;
     }
 
+    dispatch({
+        type: constants.FETCHING_USER,
+    });
+
     user.getUser(function(error, response) {
       if (error) {
         dispatch({

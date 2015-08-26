@@ -5,10 +5,11 @@
         "jsx": true,
         "modules": true
     },
-    
+
     "rules": {
         "semi": 2,
-        "new-cap": false
+        "new-cap": false,
+        "comma-dangle": "never"
     },
 
     "env": {

@@ -4,20 +4,32 @@ function round(num) {
   return parseFloat(num).toFixed(1);
 }
 
+var InfoBubble = React.createClass({
+    render() {
+        return (<li>{this.props.label} {this.props.text}</li>);
+    }
+});
+
 var CharacterInfo = React.createClass({
   render() {
-    var user = this.props.user;
+    var { user, fetchingUser } = this.props;
     var hp = "",
         mp = "",
         experience = "",
         level = "",
         userDisplay = "";
 
+    console.log(fetchingUser);
+
+    if (fetchingUser) {
+        return <div>Fetching user...</div>;
+    }
+
     if (user) {
-      hp = user.hp ? <li>HP: {round(user.hp)}/{user.maxHealth}</li> : "";
-      mp = user.mp ? <li>MP: {round(user.mp)}/{user.maxMP}</li> : "";
-      experience = user.exp ? <li>XP: {user.exp}/{user.toNextLevel}</li> : "";
-      level = user.lvl ? <li>Level: {user.lvl}</li> : "";
+      hp = user.hp ? <InfoBubble label="HP" text={round(user.hp) + "/" + user.maxHealth} /> : "";
+      mp = user.mp ? <InfoBubble label="MP" text={round(user.mp) + "/" + user.maxMP} /> : "";
+      experience = user.exp ? <InfoBubble label="XP" text={`${user.exp}/${user.toNextLevel}`} /> : "";
+      level = user.lvl ? <InfoBubble label="Level" text={user.lvl} /> : "";
       userDisplay = user.name ? user.name : "";
     }
 
