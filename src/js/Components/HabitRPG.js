@@ -18,15 +18,12 @@ function selector(state) {
     user: state.user,
     tasks: helpers.getTodaysTasks(state.tasks),
     currentTab: state.currentTab,
-    fetchingUser: state.isFetchingUser
   };
 }
 
 var HabitRPG = React.createClass({
     render: function() {
-        const { dispatch, user, tasks, fetchingUser, currentTab } = this.props;
-
-        console.log(fetchingUser);
+        const { dispatch, user, tasks, currentTab } = this.props;
 
         function updateTaskScore(task, direction) {
             dispatch(actions.updateTaskScore(task, direction));
@@ -34,7 +31,7 @@ var HabitRPG = React.createClass({
 
         return (
             <div>
-              <CharacterInfo user={user} fetchingUser={fetchingUser} />
+              <CharacterInfo user={user} />
               <TabView currentTab={currentTab} switchTab={(newTab) => dispatch(actions.switchTab(newTab))} updateTaskScore={updateTaskScore} options={this.props.options} user={user} tasks={tasks} tabs={tabs} />
             </div>
         );

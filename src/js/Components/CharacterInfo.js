@@ -12,18 +12,12 @@ var InfoBubble = React.createClass({
 
 var CharacterInfo = React.createClass({
   render() {
-    var { user, fetchingUser } = this.props;
+    var { user } = this.props;
     var hp = "",
         mp = "",
         experience = "",
         level = "",
         userDisplay = "";
-
-    console.log(fetchingUser);
-
-    if (fetchingUser) {
-        return <div>Fetching user...</div>;
-    }
 
     if (user) {
       hp = user.hp ? <InfoBubble label="HP" text={round(user.hp) + "/" + user.maxHealth} /> : "";

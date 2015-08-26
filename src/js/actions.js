@@ -36,6 +36,20 @@ export function fetchUser(options) {
   user = new api(id, token);
 
   return dispatch => {
+    if (id && token) {
+        chrome.storage.local.get(["user", "tasks"], function ({user, tasks}) {
+          if (!user || !tasks) {
+            return;
+          }
+
+          dispatch({
+              type: constants.FETCH_USER,
+              tasks: Immutable.fromJS(JSON.parse(tasks)),
+              user: JSON.parse(user),
+          });
+        });
+    }
+
     if (!id || !token || !user) {
       dispatch({
         type: constants.SHOW_FEEDBACK,
@@ -45,10 +59,6 @@ export function fetchUser(options) {
       });
       return;
     }
-
-    dispatch({
-        type: constants.FETCHING_USER,
-    });
 
     user.getUser(function(error, response) {
       if (error) {
@@ -76,6 +86,12 @@ export function fetchUser(options) {
       });
 
       info.name = responseJS.profile.name;
+
+      // save the information in localstorage, for later use
+      chrome.storage.local.set({
+          user: JSON.stringify(info),
+          tasks: JSON.stringify(tasks)
+      });
 
       dispatch({
         type: constants.FETCH_USER,

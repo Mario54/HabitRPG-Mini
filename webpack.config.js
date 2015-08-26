@@ -1,4 +1,3 @@
-// webpack.config.js
 module.exports = {
   entry: "./src/js/app.js",
   output: {
@@ -10,7 +9,6 @@ module.exports = {
     ]
   },
   resolve: {
-    // you can now require('file') instead of require('file.coffee')
     extensions: ["", ".js", ".json"]
   }
 };

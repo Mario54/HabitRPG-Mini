@@ -138,7 +138,7 @@ var TaskView = React.createClass({
 
         var TabView = taskViewMap[taskType];
 
-        return <TabView tasks={tasks} />;
+        return <TabView {...this.props} tasks={tasks} />;
     }
 });
 
