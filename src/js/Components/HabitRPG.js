@@ -26,7 +26,7 @@ var HabitRPG = React.createClass({
         const { dispatch, user, tasks, currentTab } = this.props;
 
         function updateTaskScore(task, direction) {
-            dispatch(actions.updateTaskScore(task, direction));
+            dispatch(actions.updateTaskScore({task, direction}));
         }
 
         return (

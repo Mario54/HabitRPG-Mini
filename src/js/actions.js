@@ -3,8 +3,6 @@ var api = require("habitrpg-api");
 var Immutable = require("immutable");
 import uuid from "uuid";
 
-var user;
-
 function createFeedback(dispatch, { delay, message, type }) {
   var id = uuid.v4();
 
@@ -32,11 +30,10 @@ function createFeedback(dispatch, { delay, message, type }) {
 }
 
 export function fetchUser(options) {
-  const { id, token } = options;
-  user = new api(id, token);
+  const { userAPI } = options;
 
   return dispatch => {
-    if (id && token) {
+    if (userAPI) {
         chrome.storage.local.get(["user", "tasks"], function ({user, tasks}) {
           if (!user || !tasks) {
             return;
@@ -50,7 +47,7 @@ export function fetchUser(options) {
         });
     }
 
-    if (!id || !token || !user) {
+    if (!userAPI) {
       dispatch({
         type: constants.SHOW_FEEDBACK,
         feedbackType: "error",
@@ -60,7 +57,7 @@ export function fetchUser(options) {
       return;
     }
 
-    user.getUser(function(error, response) {
+    userAPI.getUser(function(error, response) {
       if (error) {
         dispatch({
           type: constants.SHOW_FEEDBACK,
@@ -102,10 +99,10 @@ export function fetchUser(options) {
   };
 }
 
-export function updateTaskScore(task, direction) {
+export function updateTaskScore({task, direction, userAPI}) {
   return dispatch => {
     var promise = new Promise(function (resolve, reject) {
-      user.updateTaskScore(task.get("id"), direction, function(error, response) {
+      userAPI.updateTaskScore(task.get("id"), direction, function(error, response) {
           // mutating = bad, use object assign?
           var message = response;
           message.task = task;
@@ -151,6 +148,14 @@ export function dismissFeedback(id) {
   return {
     type: constants.REMOVE_FEEDBACK,
     id
+  };
+}
+
+export function setUserAPIKeys({id, token}) {
+  return {
+    type: constants.SET_USER_API_KEYS,
+    id,
+    token
   };
 }
 

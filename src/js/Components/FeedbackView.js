@@ -1,7 +1,7 @@
 var React = require("react");
 var { FeedbackView } = require("./FeedbackItems");
 import { connect } from "react-redux";
-import actions from "../actions";
+import * as actions from "../actions";
 
 var FeedbackArea = React.createClass({
   render() {

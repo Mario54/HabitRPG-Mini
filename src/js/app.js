@@ -1,11 +1,10 @@
 /*global chrome */
 var React = require("react");
 var root = document.getElementById("content");
-var options = require("./options");
+import * as options from "./options";
 var HabitRPG = require("./Components/HabitRPG");
 var FeedbackArea = require("./Components/FeedbackView");
 import * as actions from "./actions";
-// import * as Actions from "./actions";
 import { Provider } from "react-redux";
 import habitrpg from "./stores/habitrpg";
 import { createStore, applyMiddleware } from "redux";
@@ -40,6 +39,7 @@ renderApp(root);
 if (chrome) {
   // once the user id and token are available, display the app
   options.fetch(chrome.storage, function ({id, token, showCompletedTasks }) {
-    store.dispatch(actions.fetchUser({id, token}));
+    store.dispatch(actions.setUserAPIKeys({id, token}));
+    store.dispatch(actions.fetchUser({userAPI: store.getState().userAPI}));
   });
 }

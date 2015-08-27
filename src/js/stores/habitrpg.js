@@ -1,6 +1,7 @@
 import * as constants from "../constants";
 var assign = require("object-assign");
 var Immutable = require("immutable");
+var api = require("habitrpg-api");
 
 const initialState = {
   user: {},
@@ -41,6 +42,11 @@ const actionsMap = {
       return {
           currentTab: action.tabIndex
       };
+  },
+  [constants.SET_USER_API_KEYS]: (state, action) => {
+    return {
+      userAPI: (new api(action.id, action.token))
+    };
   }
 };
 
